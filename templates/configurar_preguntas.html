@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Configurar Preguntas</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body { background: #020b24; color: white; font-family: Arial, Helvetica, sans-serif; }
+        .container { margin-top: 50px; background: rgba(8,18,45,0.95); padding: 40px; border-radius: 20px; box-shadow: 0 0 30px rgba(0,183,255,0.3); }
+        h2 { color: #00bfff; text-align: center; margin-bottom: 30px; }
+        select, input, textarea { width: 100%; margin-top: 10px; background: #001233; border: 1px solid #00bfff; border-radius: 10px; color: white; padding: 10px; }
+        .btn-primary { margin-top: 25px; background: linear-gradient(90deg,#0072ff,#00bfff); border: none; border-radius: 10px; color: white; font-weight: bold; padding: 12px 25px; transition: 0.3s; }
+        .btn-primary:hover { transform: scale(1.05); box-shadow: 0 0 20px #00bfff; }
+        .bloque-pregunta { margin-bottom: 40px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Configurar preguntas para el examen: {{ examen.titulo }}</h2>
+        <form method="POST" action="/guardar_preguntas">
+            <input type="hidden" name="id_examen" value="{{ examen.id_examen }}">
+            <input type="hidden" name="num_preguntas" value="{{ examen.num_preguntas }}">
+
+            {% for i in range(examen.num_preguntas) %}
+            <div class="bloque-pregunta">
+                <h5>Pregunta {{ i + 1 }}</h5>
+                <textarea name="pregunta_{{ i }}" placeholder="Escribe la pregunta" required></textarea>
+
+                <select name="tipo_{{ i }}" id="tipo_{{ i }}" onchange="mostrarCampos({{ i }})" required>
+                    <option value="">Selecciona tipo de pregunta</option>
+                    <option value="vf">Verdadero / Falso</option>
+                    <option value="seleccion">Selección múltiple</option>
+                    <option value="abierta">Respuesta abierta</option>
+                </select>
+
+                <!-- Campos dinámicos -->
+                <div id="campos_{{ i }}" style="margin-top:15px;"></div>
+            </div>
+            {% endfor %}
+
+            <button type="submit" class="btn-primary">Guardar preguntas</button>
+        </form>
+    </div>
+
+    <script>
+        function mostrarCampos(index) {
+            const tipo = document.getElementById(`tipo_${index}`).value;
+            const contenedor = document.getElementById(`campos_${index}`);
+            contenedor.innerHTML = ""; // limpiar
+
+            if (tipo === "vf") {
+                contenedor.innerHTML = `
+                    <select name="respuesta_correcta_${index}" required>
+                        <option value="">Selecciona respuesta</option>
+                        <option value="Verdadero">Verdadero</option>
+                        <option value="Falso">Falso</option>
+                    </select>
+                `;
+            } else if (tipo === "seleccion") {
+                contenedor.innerHTML = `
+                    <input type="text" name="opcion_a_${index}" placeholder="Opción A" required>
+                    <input type="text" name="opcion_b_${index}" placeholder="Opción B" required>
+                    <input type="text" name="opcion_c_${index}" placeholder="Opción C" required>
+                    <input type="text" name="opcion_d_${index}" placeholder="Opción D" required>
+                    <input type="text" name="respuesta_correcta_${index}" placeholder="Respuesta correcta (A, B, C o D)" required>
+                `;
+            } else if (tipo === "abierta") {
+                contenedor.innerHTML = `
+                    <input type="text" name="respuesta_texto_${index}" placeholder="Respuesta abierta" required>
+                `;
+            }
+        }
+    </script>
+</body>
+</html>

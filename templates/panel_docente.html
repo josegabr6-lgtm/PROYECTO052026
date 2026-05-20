@@ -125,9 +125,11 @@
     <!-- SIDEBAR -->
     <div class="sidebar">
         <a href="#"><i class="fas fa-book"></i> Cursos</a>
-        <a href="#"><i class="fas fa-file-alt"></i> Exámenes</a>
+        <a href="/examenes_docente"><i class="fas fa-file-alt"></i> Exámenes</a>
         <a href="#"><i class="fas fa-user-check"></i> Asistencia</a>
         <a href="#"><i class="fas fa-chart-line"></i> Reportes</a>
+        <a href="{{ url_for('registro_estudiante') }}" class="btn-login" style="margin-top:15px;">
+        <i class="fas fa-user-plus"></i> REGISTRAR ESTUDIANTE</a>
         <a href="/logout"><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</a>
     </div>
 
@@ -153,7 +155,7 @@
                     <i class="fas fa-file-alt"></i>
                     <h3>Exámenes</h3>
                     <p>Crear, editar y revisar exámenes.</p>
-                    <button class="btn-system">Exámenes</button>
+                    <button class="btn-system" onclick="window.location.href='/examenes_docente'">Exámenes</button>
                 </div>
             </div>
             <div class="col-md-4">

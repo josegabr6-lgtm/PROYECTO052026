@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Resolver examen</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body { background: #020b24; color: white; font-family: Arial, Helvetica, sans-serif; }
+        .container { margin-top: 50px; background: rgba(8,18,45,0.95); padding: 40px; border-radius: 20px; box-shadow: 0 0 30px rgba(0,183,255,0.3); }
+        h2 { color: #00bfff; text-align: center; margin-bottom: 30px; }
+        .pregunta { margin-bottom: 30px; padding: 20px; background: #001233; border-radius: 15px; }
+        .btn-primary { background: linear-gradient(90deg,#0072ff,#00bfff); border: none; border-radius: 10px; color: white; font-weight: bold; padding: 12px 25px; transition: 0.3s; }
+        .btn-primary:hover { transform: scale(1.05); box-shadow: 0 0 20px #00bfff; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Examen: {{ titulo }}</h2>
+        <form method="POST">
+            {% for p in preguntas %}
+            <div class="pregunta">
+                <p><strong>{{ loop.index }}. {{ p.pregunta }}</strong></p>
+
+                {% if p.tipo == 'vf' %}
+                    <div>
+                        <label><input type="radio" name="respuesta_{{ p.id }}" value="Verdadero" required> Verdadero</label><br>
+                        <label><input type="radio" name="respuesta_{{ p.id }}" value="Falso"> Falso</label>
+                    </div>
+
+                {% elif p.tipo == 'seleccion' %}
+                    <div>
+                        <label><input type="radio" name="respuesta_{{ p.id }}" value="A" required> A) {{ p.a }}</label><br>
+                        <label><input type="radio" name="respuesta_{{ p.id }}" value="B"> B) {{ p.b }}</label><br>
+                        <label><input type="radio" name="respuesta_{{ p.id }}" value="C"> C) {{ p.c }}</label><br>
+                        <label><input type="radio" name="respuesta_{{ p.id }}" value="D"> D) {{ p.d }}</label>
+                    </div>
+
+                {% elif p.tipo == 'abierta' %}
+                    <textarea name="respuesta_{{ p.id }}" placeholder="Escribe tu respuesta aquí" required></textarea>
+                {% endif %}
+            </div>
+            {% endfor %}
+
+            <div style="text-align:center;">
+                <button type="submit" class="btn-primary">Enviar respuestas</button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Gestión de Exámenes</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body { background: #020b24; color: white; font-family: Arial, Helvetica, sans-serif; }
+        .container { margin-top: 50px; background: rgba(8,18,45,0.95); padding: 40px; border-radius: 20px; box-shadow: 0 0 30px rgba(0,183,255,0.3); }
+        h2 { color: #00bfff; text-align: center; margin-bottom: 30px; }
+        input, textarea, select { width: 100%; margin-top: 15px; background: #001233; border: 1px solid #00bfff; border-radius: 10px; color: white; padding: 10px; }
+        .btn-primary, .btn-secondary, .btn-view { margin-top: 25px; border: none; border-radius: 10px; color: white; font-weight: bold; padding: 12px 25px; transition: 0.3s; }
+        .btn-primary { background: linear-gradient(90deg,#0072ff,#00bfff); }
+        .btn-secondary { background: linear-gradient(90deg,#00bfff,#0072ff); margin-left: 10px; }
+        .btn-view { background: linear-gradient(90deg,#00ff88,#00bfff); margin-left: 10px; }
+        .btn-primary:hover, .btn-secondary:hover, .btn-view:hover { transform: scale(1.05); box-shadow: 0 0 20px #00bfff; }
+        table { margin-top: 40px; color: white; }
+        th { color: #00bfff; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- CREAR EXAMEN -->
+        <h2>Crear nuevo examen</h2>
+        <form method="POST" action="/crear_examen">
+            <input type="text" name="titulo" placeholder="Título del examen" required>
+            <textarea name="descripcion" placeholder="Descripción" required></textarea>
+            <input type="date" name="fecha" required>
+            <input type="number" name="num_preguntas" placeholder="Cantidad de preguntas" min="1" required>
+
+            <div style="display:flex; justify-content:center;">
+                <button type="submit" class="btn-primary">Guardar examen</button>
+            </div>
+        </form>
+
+        <!-- LISTA DE EXÁMENES -->
+        <h2 style="margin-top:50px;">Exámenes creados</h2>
+        <table class="table table-dark table-striped">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Título</th>
+                    <th>Descripción</th>
+                    <th>Fecha</th>
+                    <th>Preguntas</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for examen in examenes %}
+                <tr>
+                    <td>{{ examen.id_examen }}</td>
+                    <td>{{ examen.titulo }}</td>
+                    <td>{{ examen.descripcion }}</td>
+                    <td>{{ examen.fecha }}</td>
+                    <td>{{ examen.num_preguntas }}</td>
+                    <td style="display:flex; gap:10px;">
+                        <!-- Botón para configurar preguntas -->
+                        <form method="GET" action="/configurar_preguntas">
+                            <input type="hidden" name="id_examen" value="{{ examen.id_examen }}">
+                            <button type="submit" class="btn-secondary">Establecer preguntas</button>
+                        </form>
+
+                        <!-- Botón para ver preguntas -->
+                        <form method="GET" action="/ver_preguntas">
+                            <input type="hidden" name="id_examen" value="{{ examen.id_examen }}">
+                            <button type="submit" class="btn-view">Ver preguntas</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
