@@ -138,13 +138,13 @@
 
     <!-- SIDEBAR -->
     <div class="sidebar">
-        <a href="#"><i class="fas fa-home"></i> Inicio</a>
-        <a href="#"><i class="fas fa-user-check"></i> Asistencia</a>
-        <a href="#"><i class="fas fa-file-alt"></i> Reportes</a>
-        <a href="#"><i class="fas fa-shield-alt"></i> Seguridad</a>
-        <a href="#"><i class="fas fa-network-wired"></i> Redes</a>
-        <a href="#"><i class="fas fa-users"></i> Usuarios</a>
-        <a href="#"><i class="fas fa-camera"></i> Monitoreo</a>
+        <a href="/panel"><i class="fas fa-home"></i> Inicio</a>
+        <a href="/admin_asistencia"><i class="fas fa-user-check"></i> Asistencia</a>
+        <a href="/admin_reportes"><i class="fas fa-file-alt"></i> Reportes</a>
+        <a href="/admin_seguridad"><i class="fas fa-shield-alt"></i> Seguridad</a>
+        <a href="/admin_redes"><i class="fas fa-network-wired"></i> Redes</a>
+        <a href="/admin_usuarios"><i class="fas fa-users"></i> Usuarios</a>
+        <a href="/admin_monitoreo"><i class="fas fa-camera"></i> Monitoreo</a>
         <a href="{{ url_for('registro_docente') }}" class="btn-login" style="margin-top:15px;">
         <i class="fas fa-user-plus"></i> REGISTRAR DOCENTE</a>
         <a href="/logout"><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</a>
@@ -165,7 +165,7 @@
                     <i class="fas fa-user-check"></i>
                     <h3>Control de Asistencia</h3>
                     <p>Registro y monitoreo estudiantil.</p>
-                    <button class="btn-system">Ingresar</button>
+                    <button class="btn-system" onclick="window.location.href='/admin_asistencia'">Ingresar</button>
                 </div>
             </div>
             <div class="col-md-4">
@@ -173,7 +173,7 @@
                     <i class="fas fa-shield-alt"></i>
                     <h3>Seguridad Informática</h3>
                     <p>Protección y monitoreo del sistema.</p>
-                    <button class="btn-system">Seguridad</button>
+                    <button class="btn-system" onclick="window.location.href='/admin_seguridad'">Seguridad</button>
                 </div>
             </div>
             <div class="col-md-4">
@@ -181,7 +181,7 @@
                     <i class="fas fa-network-wired"></i>
                     <h3>Redes</h3>
                     <p>Gestión de infraestructura tecnológica.</p>
-                    <button class="btn-system">Redes</button>
+                    <button class="btn-system" onclick="window.location.href='/admin_redes'">Redes</button>
                 </div>
             </div>
 

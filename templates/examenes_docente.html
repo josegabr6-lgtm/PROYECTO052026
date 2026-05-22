@@ -1,41 +1,59 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <title>Gestión de Exámenes</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        body { background: #020b24; color: white; font-family: Arial, Helvetica, sans-serif; }
-        .container { margin-top: 50px; background: rgba(8,18,45,0.95); padding: 40px; border-radius: 20px; box-shadow: 0 0 30px rgba(0,183,255,0.3); }
-        h2 { color: #00bfff; text-align: center; margin-bottom: 30px; }
-        input, textarea, select { width: 100%; margin-top: 15px; background: #001233; border: 1px solid #00bfff; border-radius: 10px; color: white; padding: 10px; }
-        .btn-primary, .btn-secondary, .btn-view { margin-top: 25px; border: none; border-radius: 10px; color: white; font-weight: bold; padding: 12px 25px; transition: 0.3s; }
-        .btn-primary { background: linear-gradient(90deg,#0072ff,#00bfff); }
-        .btn-secondary { background: linear-gradient(90deg,#00bfff,#0072ff); margin-left: 10px; }
-        .btn-view { background: linear-gradient(90deg,#00ff88,#00bfff); margin-left: 10px; }
-        .btn-primary:hover, .btn-secondary:hover, .btn-view:hover { transform: scale(1.05); box-shadow: 0 0 20px #00bfff; }
-        table { margin-top: 40px; color: white; }
-        th { color: #00bfff; }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <!-- CREAR EXAMEN -->
+{% extends "base.html" %}
+
+{% block title %}Gestión de Exámenes{% endblock %}
+
+{% block head %}
+<style>
+    .form-control, textarea.form-control, select.form-control {
+        background: #001233;
+        border: 1px solid #00bfff;
+        color: white;
+    }
+    .form-control:focus, textarea.form-control:focus, select.form-control:focus {
+        box-shadow: 0 0 0 0.2rem rgba(0, 191, 255, 0.25);
+    }
+    .btn-primary, .btn-secondary, .btn-view {
+        border-radius: 10px;
+        font-weight: bold;
+    }
+    .btn-secondary {
+        background: linear-gradient(90deg,#00bfff,#0072ff);
+    }
+    .btn-view {
+        background: linear-gradient(90deg,#00ff88,#00bfff);
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container container-app">
+    <div class="mb-4 text-center">
         <h2>Crear nuevo examen</h2>
-        <form method="POST" action="/crear_examen">
-            <input type="text" name="titulo" placeholder="Título del examen" required>
-            <textarea name="descripcion" placeholder="Descripción" required></textarea>
-            <input type="date" name="fecha" required>
-            <input type="number" name="num_preguntas" placeholder="Cantidad de preguntas" min="1" required>
+    </div>
 
-            <div style="display:flex; justify-content:center;">
-                <button type="submit" class="btn-primary">Guardar examen</button>
+    <form method="POST" action="/crear_examen" class="mb-5">
+        <div class="mb-3">
+            <input type="text" class="form-control" name="titulo" placeholder="Título del examen" required>
+        </div>
+        <div class="mb-3">
+            <textarea class="form-control" name="descripcion" rows="4" placeholder="Descripción" required></textarea>
+        </div>
+        <div class="row g-3">
+            <div class="col-md-6">
+                <input type="date" class="form-control" name="fecha" required>
             </div>
-        </form>
+            <div class="col-md-6">
+                <input type="number" class="form-control" name="num_preguntas" placeholder="Cantidad de preguntas" min="1" required>
+            </div>
+        </div>
+        <div class="mt-4 text-center">
+            <button type="submit" class="btn btn-primary px-5">Guardar examen</button>
+        </div>
+    </form>
 
-        <!-- LISTA DE EXÁMENES -->
-        <h2 style="margin-top:50px;">Exámenes creados</h2>
-        <table class="table table-dark table-striped">
+    <div class="table-responsive">
+        <h2 class="text-center mb-4">Exámenes creados</h2>
+        <table class="table table-dark table-striped align-middle">
             <thead>
                 <tr>
                     <th>ID</th>
@@ -54,17 +72,18 @@
                     <td>{{ examen.descripcion }}</td>
                     <td>{{ examen.fecha }}</td>
                     <td>{{ examen.num_preguntas }}</td>
-                    <td style="display:flex; gap:10px;">
-                        <!-- Botón para configurar preguntas -->
-                        <form method="GET" action="/configurar_preguntas">
+                    <td class="d-flex flex-column flex-sm-row gap-2">
+                        <form method="GET" action="/configurar_preguntas" class="m-0">
                             <input type="hidden" name="id_examen" value="{{ examen.id_examen }}">
-                            <button type="submit" class="btn-secondary">Establecer preguntas</button>
+                            <button type="submit" class="btn btn-secondary btn-sm">Establecer preguntas</button>
                         </form>
-
-                        <!-- Botón para ver preguntas -->
-                        <form method="GET" action="/ver_preguntas">
+                        <form method="GET" action="/ver_preguntas" class="m-0">
                             <input type="hidden" name="id_examen" value="{{ examen.id_examen }}">
-                            <button type="submit" class="btn-view">Ver preguntas</button>
+                            <button type="submit" class="btn btn-view btn-sm">Ver preguntas</button>
+                        </form>
+                        <form method="POST" action="/eliminar_examen" class="m-0">
+                            <input type="hidden" name="id_examen" value="{{ examen.id_examen }}">
+                            <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
                         </form>
                     </td>
                 </tr>
@@ -72,5 +91,5 @@
             </tbody>
         </table>
     </div>
-</body>
-</html>
+</div>
+{% endblock %}

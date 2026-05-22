@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+
+{% block title %}Reportes de Seguridad{% endblock %}
+
+{% block head %}
+<style>
+    .table thead {
+        background: rgba(0, 191, 255, 0.15);
+    }
+    .table td, .table th {
+        vertical-align: middle;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h1>Reportes de Seguridad</h1>
+            <p>Incidentes detectados durante los exámenes de tus estudiantes.</p>
+        </div>
+        <a href="/panel" class="btn btn-secondary">Volver al panel</a>
+    </div>
+
+    {% if reportes %}
+    <div class="table-responsive">
+        <table class="table table-dark table-striped align-middle">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Estudiante</th>
+                    <th>Usuario</th>
+                    <th>Examen</th>
+                    <th>Evento</th>
+                    <th>Descripción</th>
+                    <th>Intentos</th>
+                    <th>Estado</th>
+                    <th>Fecha</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for reporte in reportes %}
+                <tr>
+                    <td>{{ reporte[0] }}</td>
+                    <td>{{ reporte[1] }}</td>
+                    <td>{{ reporte[2] }}</td>
+                    <td>{{ reporte[3] or 'Sin examen' }}</td>
+                    <td>{{ reporte[4] }}</td>
+                    <td>{{ reporte[5] }}</td>
+                    <td>{{ reporte[6] }}</td>
+                    <td>{{ reporte[7] }}</td>
+                    <td>{{ reporte[8] }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+    <div class="alert alert-info">No se han registrado actividades sospechosas todavía.</div>
+    {% endif %}
+</div>
+{% endblock %}

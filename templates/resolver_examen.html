@@ -1,50 +1,193 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <title>Resolver examen</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        body { background: #020b24; color: white; font-family: Arial, Helvetica, sans-serif; }
-        .container { margin-top: 50px; background: rgba(8,18,45,0.95); padding: 40px; border-radius: 20px; box-shadow: 0 0 30px rgba(0,183,255,0.3); }
-        h2 { color: #00bfff; text-align: center; margin-bottom: 30px; }
-        .pregunta { margin-bottom: 30px; padding: 20px; background: #001233; border-radius: 15px; }
-        .btn-primary { background: linear-gradient(90deg,#0072ff,#00bfff); border: none; border-radius: 10px; color: white; font-weight: bold; padding: 12px 25px; transition: 0.3s; }
-        .btn-primary:hover { transform: scale(1.05); box-shadow: 0 0 20px #00bfff; }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <h2>Examen: {{ titulo }}</h2>
-        <form method="POST">
-            {% for p in preguntas %}
-            <div class="pregunta">
-                <p><strong>{{ loop.index }}. {{ p.pregunta }}</strong></p>
+{% extends "base.html" %}
 
-                {% if p.tipo == 'vf' %}
-                    <div>
-                        <label><input type="radio" name="respuesta_{{ p.id }}" value="Verdadero" required> Verdadero</label><br>
-                        <label><input type="radio" name="respuesta_{{ p.id }}" value="Falso"> Falso</label>
-                    </div>
+{% block title %}Resolver examen{% endblock %}
 
-                {% elif p.tipo == 'seleccion' %}
-                    <div>
-                        <label><input type="radio" name="respuesta_{{ p.id }}" value="A" required> A) {{ p.a }}</label><br>
-                        <label><input type="radio" name="respuesta_{{ p.id }}" value="B"> B) {{ p.b }}</label><br>
-                        <label><input type="radio" name="respuesta_{{ p.id }}" value="C"> C) {{ p.c }}</label><br>
-                        <label><input type="radio" name="respuesta_{{ p.id }}" value="D"> D) {{ p.d }}</label>
-                    </div>
+{% block head %}
+<style>
+    .pregunta {
+        margin-bottom: 30px;
+        padding: 20px;
+        background: #001233;
+        border-radius: 15px;
+    }
+    .form-control, textarea.form-control {
+        background: #001233;
+        border: 1px solid #00bfff;
+        color: white;
+    }
+    .form-range, .form-select {
+        background: #001233;
+        border: 1px solid #00bfff;
+        color: white;
+    }
+    .btn-primary {
+        border-radius: 10px;
+        font-weight: bold;
+        padding: 12px 25px;
+    }
+    textarea.form-control {
+        min-height: 120px;
+    }
+    label {
+        display: block;
+        margin-bottom: 8px;
+        cursor: pointer;
+    }
+</style>
+{% endblock %}
 
-                {% elif p.tipo == 'abierta' %}
-                    <textarea name="respuesta_{{ p.id }}" placeholder="Escribe tu respuesta aquí" required></textarea>
-                {% endif %}
-            </div>
-            {% endfor %}
+{% block content %}
+<div class="container container-app">
+    <h2 class="text-center mb-4">Examen: {{ titulo }}</h2>
+    <div id="suspicious-notification" class="alert alert-warning d-none" role="alert"></div>
+    <form method="POST" id="examenForm">
+        <input type="hidden" name="auto_submit" id="auto_submit" value="0">
+        <input type="hidden" name="id_examen" value="{{ id_examen }}">
+        {% for p in preguntas %}
+        <div class="pregunta">
+            <p class="mb-3"><strong>{{ loop.index }}. {{ p.pregunta }}</strong></p>
 
-            <div style="text-align:center;">
-                <button type="submit" class="btn-primary">Enviar respuestas</button>
-            </div>
-        </form>
-    </div>
-</body>
-</html>
+            {% if p.tipo == 'vf' %}
+                <div class="form-check mb-2">
+                    <input class="form-check-input" type="radio" name="respuesta_{{ p.id }}" id="{{ p.id }}_verdadero" value="Verdadero" required>
+                    <label class="form-check-label" for="{{ p.id }}_verdadero">Verdadero</label>
+                </div>
+                <div class="form-check mb-2">
+                    <input class="form-check-input" type="radio" name="respuesta_{{ p.id }}" id="{{ p.id }}_falso" value="Falso">
+                    <label class="form-check-label" for="{{ p.id }}_falso">Falso</label>
+                </div>
+
+            {% elif p.tipo == 'seleccion' %}
+                {% for option, label in [('A', p.a), ('B', p.b), ('C', p.c), ('D', p.d)] %}
+                <div class="form-check mb-2">
+                    <input class="form-check-input" type="radio" name="respuesta_{{ p.id }}" id="{{ p.id }}_{{ option }}" value="{{ option }}" required>
+                    <label class="form-check-label" for="{{ p.id }}_{{ option }}">{{ option }}) {{ label }}</label>
+                </div>
+                {% endfor %}
+
+            {% elif p.tipo == 'abierta' %}
+                <div class="mb-3">
+                    <textarea class="form-control" name="respuesta_{{ p.id }}" placeholder="Escribe tu respuesta aquí" required></textarea>
+                </div>
+            {% endif %}
+        </div>
+        {% endfor %}
+
+        <div class="text-center mt-4">
+            <button type="submit" class="btn btn-primary">Enviar respuestas</button>
+        </div>
+    </form>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    const examForm = document.getElementById('examenForm');
+    const notification = document.getElementById('suspicious-notification');
+    const examId = document.querySelector('input[name="id_examen"]').value;
+    let suspiciousCount = 0;
+    let closingExam = false;
+    let pendingSuspiciousMessage = null;
+    let lastTabChangeTime = 0;
+    let lastMultiWindowTime = 0;
+    let lastCloseAttemptTime = 0;
+
+    function showNotification(message) {
+        pendingSuspiciousMessage = null;
+        notification.textContent = message;
+        notification.classList.remove('d-none');
+        notification.classList.add('alert', 'alert-warning');
+        notification.style.cssText = 'display:block!important;position:fixed;top:20px;left:50%;transform:translateX(-50%);z-index:1050;opacity:1!important;width:calc(100% - 40px);max-width:800px;padding:20px;';
+        notification.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+
+    function reportSuspicious(type, message) {
+        if (closingExam || suspiciousCount >= 3) return;
+        pendingSuspiciousMessage = message;
+
+        if (!document.hidden) {
+            showNotification(message);
+        }
+
+        fetch('/reportar_sospecha', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ id_examen: examId, tipo: type, mensaje: message })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (!data.ok) {
+                if (!document.hidden) showNotification('Actividad sospechosa detectada, pero no se pudo registrar en el servidor.');
+                return;
+            }
+            suspiciousCount = data.contador;
+            if (data.close_exam) {
+                closingExam = true;
+                if (!document.hidden) showNotification('Se han registrado tres actividades sospechosas. Tu examen se cerrará y se enviarán las respuestas actuales.');
+                document.getElementById('auto_submit').value = '1';
+                setTimeout(() => examForm.submit(), 1000);
+            } else {
+                if (!document.hidden) showNotification(`Actividad sospechosa detectada (${suspiciousCount}/3). Si continúa, el examen se cerrará automáticamente.`);
+            }
+        })
+        .catch(() => {
+            if (!document.hidden) showNotification('Actividad sospechosa detectada. Intenta mantenerte en la pantalla del examen.');
+        });
+    }
+
+    function sendBeaconReport(type, message) {
+        if (closingExam) return;
+        pendingSuspiciousMessage = message;
+        const payload = JSON.stringify({ id_examen: examId, tipo: type, mensaje: message });
+        const blob = new Blob([payload], { type: 'application/json' });
+        navigator.sendBeacon('/reportar_sospecha', blob);
+    }
+
+    // 1. Detección: Cambio de pestaña en el mismo navegador
+    document.addEventListener('visibilitychange', () => {
+        if (document.hidden) {
+            const now = Date.now();
+            if (now - lastTabChangeTime > 3000) {
+                lastTabChangeTime = now;
+                reportSuspicious('Cambio de pestaña', 'El estudiante cambió a otra pestaña del navegador.');
+            }
+        }
+
+        if (!document.hidden) {
+            if (pendingSuspiciousMessage) {
+                showNotification(pendingSuspiciousMessage);
+            }
+        }
+    });
+
+    // 2. Detección: Cierre del navegador o minimización de pantalla
+    window.addEventListener('pagehide', () => {
+        if (!closingExam) {
+            const now = Date.now();
+            if (now - lastCloseAttemptTime > 3000) {
+                lastCloseAttemptTime = now;
+                pendingSuspiciousMessage = 'Intento de cerrar el navegador o salir del examen.';
+                sendBeaconReport('Cierre de navegador', 'El estudiante intentó cerrar el navegador o recargar la página.');
+            }
+        }
+    });
+
+    // 3. Detección: Pérdida de foco (otra ventana/aplicación activa)
+    window.addEventListener('blur', () => {
+        if (!closingExam && !document.hidden) {
+            const now = Date.now();
+            if (now - lastMultiWindowTime > 3000) {
+                lastMultiWindowTime = now;
+                reportSuspicious('Múltiples ventanas', 'El estudiante tiene otra aplicación o ventana abierta en primer plano.');
+            }
+        }
+    });
+
+    window.addEventListener('focus', () => {
+        if (pendingSuspiciousMessage) {
+            showNotification(pendingSuspiciousMessage);
+        }
+    });
+
+</script>
+{% endblock %}

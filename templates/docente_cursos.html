@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+
+{% block title %}Mi Curso{% endblock %}
+
+{% block head %}
+<style>
+    .table thead {
+        background: rgba(0, 191, 255, 0.15);
+    }
+    .table td, .table th {
+        vertical-align: middle;
+    }
+    .curso-header {
+        border-radius: 18px;
+        background: rgba(0, 0, 0, 0.5);
+        padding: 28px;
+        margin-bottom: 24px;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="curso-header text-white">
+        <div class="d-flex flex-column flex-md-row justify-content-between align-items-start gap-3">
+            <div>
+                <h1 class="mb-2">Mi curso</h1>
+                <p class="mb-0">Aquí puedes ver a los estudiantes asignados a tu curso.</p>
+            </div>
+            <div class="text-md-end">
+                <a href="/panel" class="btn btn-secondary">Volver al panel</a>
+            </div>
+        </div>
+    </div>
+
+    {% if info_message %}
+    <div class="alert alert-info">{{ info_message }}</div>
+    {% endif %}
+
+    {% if estudiantes %}
+    <div class="table-responsive">
+        <table class="table table-dark table-striped align-middle">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>Apellido</th>
+                    <th>Usuario</th>
+                    <th>Correo</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for alumno in estudiantes %}
+                <tr>
+                    <td>{{ alumno.id_usuario }}</td>
+                    <td>{{ alumno.nombre }}</td>
+                    <td>{{ alumno.apellido }}</td>
+                    <td>{{ alumno.usuario }}</td>
+                    <td>{{ alumno.correo }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+    <div class="alert alert-warning">No se encontraron estudiantes asignados a tu curso.</div>
+    {% endif %}
+</div>
+{% endblock %}

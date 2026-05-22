@@ -1,32 +1,41 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <title>Resultado del examen</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        body { background: #020b24; color: white; font-family: Arial, Helvetica, sans-serif; }
-        .container { margin-top: 100px; background: rgba(8,18,45,0.95); padding: 40px; border-radius: 20px; box-shadow: 0 0 30px rgba(0,183,255,0.3); text-align:center; }
-        h2 { color: #00bfff; margin-bottom: 30px; }
-        .puntaje { font-size: 28px; font-weight: bold; margin: 20px 0; }
-        .btn-primary { background: linear-gradient(90deg,#0072ff,#00bfff); border: none; border-radius: 10px; color: white; font-weight: bold; padding: 12px 25px; transition: 0.3s; }
-        .btn-primary:hover { transform: scale(1.05); box-shadow: 0 0 20px #00bfff; }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <h2>Has completado el examen: {{ titulo }}</h2>
-        <p class="puntaje">Tu puntaje: {{ puntaje }}%</p>
+{% extends "base.html" %}
 
-        {% if puntaje >= 80 %}
-            <p style="color:#00ff88;">¡Excelente trabajo! 🚀</p>
-        {% elif puntaje >= 50 %}
-            <p style="color:#00bfff;">Buen esfuerzo, sigue practicando 💪</p>
-        {% else %}
-            <p style="color:#ff4444;">No te desanimes, ¡tú puedes mejorar! 🔥</p>
-        {% endif %}
+{% block title %}Resultado del examen{% endblock %}
 
-        <a href="/panel" class="btn btn-primary">Volver al panel</a>
-    </div>
-</body>
-</html>
+{% block head %}
+<style>
+    .btn-primary {
+        border-radius: 10px;
+        font-weight: bold;
+        padding: 12px 25px;
+    }
+    .puntaje {
+        font-size: 28px;
+        font-weight: bold;
+        margin: 20px 0;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container container-app text-center">
+    <h2 class="mb-4">Has completado el examen: {{ titulo }}</h2>
+    <p class="puntaje">Tu puntaje: {{ puntaje }}%</p>
+
+    {% if puntaje >= 80 %}
+        <p class="text-success">¡Excelente trabajo! 🚀</p>
+    {% elif puntaje >= 50 %}
+        <p class="text-info">Buen esfuerzo, sigue practicando 💪</p>
+    {% else %}
+        <p class="text-danger">No te desanimes, ¡tú puedes mejorar! 🔥</p>
+    {% endif %}
+
+    {% if auto_submit %}
+        <div class="alert alert-warning mt-4">
+            Tu examen fue cerrado automáticamente después de detectar tres actividades sospechosas. Las respuestas actuales fueron enviadas al docente.
+        </div>
+    {% endif %}
+
+    <a href="/panel" class="btn btn-primary mt-4">Volver al panel</a>
+</div>
+{% endblock %}
