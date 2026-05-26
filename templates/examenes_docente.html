@@ -27,11 +27,24 @@
 
 {% block content %}
 <div class="container container-app">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
     <div class="mb-4 text-center">
         <h2>Crear nuevo examen</h2>
     </div>
 
-    <form method="POST" action="/crear_examen" class="mb-5">
+    <form method="POST" action="{{ url_for('crear_examen') }}" class="mb-5">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+        
         <div class="mb-3">
             <input type="text" class="form-control" name="titulo" placeholder="Título del examen" required>
         </div>
@@ -73,15 +86,10 @@
                     <td>{{ examen.fecha }}</td>
                     <td>{{ examen.num_preguntas }}</td>
                     <td class="d-flex flex-column flex-sm-row gap-2">
-                        <form method="GET" action="/configurar_preguntas" class="m-0">
-                            <input type="hidden" name="id_examen" value="{{ examen.id_examen }}">
-                            <button type="submit" class="btn btn-secondary btn-sm">Establecer preguntas</button>
-                        </form>
-                        <form method="GET" action="/ver_preguntas" class="m-0">
-                            <input type="hidden" name="id_examen" value="{{ examen.id_examen }}">
-                            <button type="submit" class="btn btn-view btn-sm">Ver preguntas</button>
-                        </form>
-                        <form method="POST" action="/eliminar_examen" class="m-0">
+                        <a href="{{ url_for('configurar_preguntas', id_examen=examen.id_examen) }}" class="btn btn-secondary btn-sm">Establecer preguntas</a>
+                        <a href="{{ url_for('ver_preguntas', id_examen=examen.id_examen) }}" class="btn btn-view btn-sm">Ver preguntas</a>
+                        <form method="POST" action="{{ url_for('eliminar_examen') }}" class="m-0" onsubmit="return confirm('¿Está seguro de eliminar este examen?');">
+                            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
                             <input type="hidden" name="id_examen" value="{{ examen.id_examen }}">
                             <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
                         </form>

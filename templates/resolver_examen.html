@@ -9,16 +9,16 @@
         padding: 20px;
         background: #001233;
         border-radius: 15px;
+        border: 1px solid rgba(0, 191, 255, 0.2);
     }
     .form-control, textarea.form-control {
         background: #001233;
         border: 1px solid #00bfff;
         color: white;
     }
-    .form-range, .form-select {
-        background: #001233;
-        border: 1px solid #00bfff;
-        color: white;
+    .form-check-input:checked {
+        background-color: #00bfff;
+        border-color: #00bfff;
     }
     .btn-primary {
         border-radius: 10px;
@@ -33,16 +33,45 @@
         margin-bottom: 8px;
         cursor: pointer;
     }
+    #timer {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: linear-gradient(90deg, #0072ff, #00bfff);
+        color: white;
+        padding: 15px 25px;
+        border-radius: 15px;
+        font-size: 24px;
+        font-weight: bold;
+        z-index: 1000;
+        box-shadow: 0 0 20px rgba(0, 191, 255, 0.5);
+    }
+    #timer.warning {
+        background: linear-gradient(90deg, #ff6b35, #f7931e);
+    }
+    #timer.danger {
+        background: linear-gradient(90deg, #dc3545, #ff4757);
+        animation: pulse 1s infinite;
+    }
+    @keyframes pulse {
+        0%, 100% { transform: scale(1); }
+        50% { transform: scale(1.05); }
+    }
 </style>
 {% endblock %}
 
 {% block content %}
+<div id="timer">60:00</div>
+
 <div class="container container-app">
     <h2 class="text-center mb-4">Examen: {{ titulo }}</h2>
     <div id="suspicious-notification" class="alert alert-warning d-none" role="alert"></div>
-    <form method="POST" id="examenForm">
+    
+    <form method="POST" id="examenForm" action="{{ url_for('resolver_examen') }}">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
         <input type="hidden" name="auto_submit" id="auto_submit" value="0">
         <input type="hidden" name="id_examen" value="{{ id_examen }}">
+        
         {% for p in preguntas %}
         <div class="pregunta">
             <p class="mb-3"><strong>{{ loop.index }}. {{ p.pregunta }}</strong></p>
@@ -59,10 +88,12 @@
 
             {% elif p.tipo == 'seleccion' %}
                 {% for option, label in [('A', p.a), ('B', p.b), ('C', p.c), ('D', p.d)] %}
+                {% if label %}
                 <div class="form-check mb-2">
                     <input class="form-check-input" type="radio" name="respuesta_{{ p.id }}" id="{{ p.id }}_{{ option }}" value="{{ option }}" required>
                     <label class="form-check-label" for="{{ p.id }}_{{ option }}">{{ option }}) {{ label }}</label>
                 </div>
+                {% endif %}
                 {% endfor %}
 
             {% elif p.tipo == 'abierta' %}
@@ -73,8 +104,10 @@
         </div>
         {% endfor %}
 
-        <div class="text-center mt-4">
-            <button type="submit" class="btn btn-primary">Enviar respuestas</button>
+        <div class="text-center mt-4 mb-5">
+            <button type="submit" class="btn btn-primary">
+                <i class="fas fa-paper-plane me-2"></i>Enviar respuestas
+            </button>
         </div>
     </form>
 </div>
@@ -82,6 +115,33 @@
 
 {% block scripts %}
 <script>
+    // ========== TEMPORIZADOR ==========
+    const TIEMPO_LIMITE = 60 * 60; // 60 minutos en segundos
+    let tiempoRestante = TIEMPO_LIMITE;
+    const timerElement = document.getElementById('timer');
+
+    function actualizarTimer() {
+        const minutos = Math.floor(tiempoRestante / 60);
+        const segundos = tiempoRestante % 60;
+        timerElement.textContent = `${minutos.toString().padStart(2, '0')}:${segundos.toString().padStart(2, '0')}`;
+        
+        if (tiempoRestante <= 300) { // 5 minutos
+            timerElement.classList.add('danger');
+        } else if (tiempoRestante <= 600) { // 10 minutos
+            timerElement.classList.add('warning');
+        }
+        
+        if (tiempoRestante <= 0) {
+            clearInterval(timerInterval);
+            document.getElementById('auto_submit').value = '1';
+            examForm.submit();
+        }
+        tiempoRestante--;
+    }
+    const timerInterval = setInterval(actualizarTimer, 1000);
+    actualizarTimer();
+
+    // ========== SISTEMA ANTI-TRAMPA ==========
     const examForm = document.getElementById('examenForm');
     const notification = document.getElementById('suspicious-notification');
     const examId = document.querySelector('input[name="id_examen"]').value;
@@ -96,54 +156,53 @@
         pendingSuspiciousMessage = null;
         notification.textContent = message;
         notification.classList.remove('d-none');
-        notification.classList.add('alert', 'alert-warning');
-        notification.style.cssText = 'display:block!important;position:fixed;top:20px;left:50%;transform:translateX(-50%);z-index:1050;opacity:1!important;width:calc(100% - 40px);max-width:800px;padding:20px;';
+        notification.style.cssText = 'display:block!important;position:fixed;top:80px;left:50%;transform:translateX(-50%);z-index:1050;opacity:1!important;width:calc(100% - 40px);max-width:800px;padding:20px;';
         notification.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
 
     function reportSuspicious(type, message) {
         if (closingExam || suspiciousCount >= 3) return;
         pendingSuspiciousMessage = message;
+        if (!document.hidden) showNotification(message);
 
-        if (!document.hidden) {
-            showNotification(message);
-        }
-
-        fetch('/reportar_sospecha', {
+        fetch('{{ url_for("reportar_sospecha") }}', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: { 
+                'Content-Type': 'application/json',
+                'X-CSRFToken': '{{ csrf_token() }}'
+            },
             body: JSON.stringify({ id_examen: examId, tipo: type, mensaje: message })
         })
         .then(response => response.json())
         .then(data => {
             if (!data.ok) {
-                if (!document.hidden) showNotification('Actividad sospechosa detectada, pero no se pudo registrar en el servidor.');
+                if (!document.hidden) showNotification('Actividad sospechosa detectada, pero no se pudo registrar.');
                 return;
             }
             suspiciousCount = data.contador;
             if (data.close_exam) {
                 closingExam = true;
-                if (!document.hidden) showNotification('Se han registrado tres actividades sospechosas. Tu examen se cerrará y se enviarán las respuestas actuales.');
+                clearInterval(timerInterval);
+                if (!document.hidden) showNotification('Se han registrado tres actividades sospechosas. Tu examen se cerrará.');
                 document.getElementById('auto_submit').value = '1';
-                setTimeout(() => examForm.submit(), 1000);
+                setTimeout(() => examForm.submit(), 2000);
             } else {
-                if (!document.hidden) showNotification(`Actividad sospechosa detectada (${suspiciousCount}/3). Si continúa, el examen se cerrará automáticamente.`);
+                if (!document.hidden) showNotification(`Actividad sospechosa detectada (${suspiciousCount}/3). Si continúa, el examen se cerrará.`);
             }
         })
         .catch(() => {
-            if (!document.hidden) showNotification('Actividad sospechosa detectada. Intenta mantenerte en la pantalla del examen.');
+            if (!document.hidden) showNotification('Actividad sospechosa detectada. Mantente en la pantalla del examen.');
         });
     }
 
     function sendBeaconReport(type, message) {
         if (closingExam) return;
-        pendingSuspiciousMessage = message;
         const payload = JSON.stringify({ id_examen: examId, tipo: type, mensaje: message });
         const blob = new Blob([payload], { type: 'application/json' });
-        navigator.sendBeacon('/reportar_sospecha', blob);
+        navigator.sendBeacon('{{ url_for("reportar_sospecha") }}', blob);
     }
 
-    // 1. Detección: Cambio de pestaña en el mismo navegador
+    // 1. Cambio de pestaña
     document.addEventListener('visibilitychange', () => {
         if (document.hidden) {
             const now = Date.now();
@@ -152,27 +211,23 @@
                 reportSuspicious('Cambio de pestaña', 'El estudiante cambió a otra pestaña del navegador.');
             }
         }
-
-        if (!document.hidden) {
-            if (pendingSuspiciousMessage) {
-                showNotification(pendingSuspiciousMessage);
-            }
+        if (!document.hidden && pendingSuspiciousMessage) {
+            showNotification(pendingSuspiciousMessage);
         }
     });
 
-    // 2. Detección: Cierre del navegador o minimización de pantalla
+    // 2. Cierre del navegador
     window.addEventListener('pagehide', () => {
         if (!closingExam) {
             const now = Date.now();
             if (now - lastCloseAttemptTime > 3000) {
                 lastCloseAttemptTime = now;
-                pendingSuspiciousMessage = 'Intento de cerrar el navegador o salir del examen.';
                 sendBeaconReport('Cierre de navegador', 'El estudiante intentó cerrar el navegador o recargar la página.');
             }
         }
     });
 
-    // 3. Detección: Pérdida de foco (otra ventana/aplicación activa)
+    // 3. Pérdida de foco
     window.addEventListener('blur', () => {
         if (!closingExam && !document.hidden) {
             const now = Date.now();
@@ -184,10 +239,71 @@
     });
 
     window.addEventListener('focus', () => {
-        if (pendingSuspiciousMessage) {
-            showNotification(pendingSuspiciousMessage);
+        if (pendingSuspiciousMessage) showNotification(pendingSuspiciousMessage);
+    });
+
+    // 4. COPIAR / PEGAR / CORTAR
+    document.addEventListener('copy', e => { 
+        e.preventDefault(); 
+        reportSuspicious('Copiar', 'Intento de copiar contenido del examen.'); 
+    });
+    document.addEventListener('paste', e => { 
+        e.preventDefault(); 
+        reportSuspicious('Pegar', 'Intento de pegar contenido en el examen.'); 
+    });
+    document.addEventListener('cut', e => { 
+        e.preventDefault(); 
+        reportSuspicious('Cortar', 'Intento de cortar contenido del examen.'); 
+    });
+
+    // 5. CLIC DERECHO
+    document.addEventListener('contextmenu', e => {
+        e.preventDefault();
+        reportSuspicious('Clic derecho', 'Menú contextual deshabilitado durante el examen.');
+    });
+
+    // 6. TECLAS DE DESARROLLADOR
+    document.addEventListener('keydown', e => {
+        if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && ['I','J','C'].includes(e.key))) {
+            e.preventDefault();
+            reportSuspicious('DevTools', 'Intento de abrir herramientas de desarrollador.');
+        }
+        if (e.ctrlKey && ['u','s','p'].includes(e.key.toLowerCase())) {
+            e.preventDefault();
+        }
+        if (e.key === 'PrintScreen') {
+            e.preventDefault();
+            reportSuspicious('Captura de pantalla', 'Intento de capturar pantalla detectado.');
         }
     });
 
+    // 7. SELECCIÓN DE TEXTO
+    document.addEventListener('selectstart', e => {
+        e.preventDefault();
+    });
+
+    // 8. PREVENIR SALIR DE LA PÁGINA
+    window.addEventListener('beforeunload', e => {
+        if (!closingExam) {
+            e.preventDefault();
+            e.returnValue = '¿Estás seguro de salir del examen? Se registrará como actividad sospechosa.';
+        }
+    });
+
+    // 9. FULLSCREEN
+    document.addEventListener('DOMContentLoaded', () => {
+        const elem = document.documentElement;
+        if (elem.requestFullscreen) {
+            elem.requestFullscreen().catch(err => {
+                console.log('Fullscreen no disponible:', err);
+            });
+        }
+    });
+
+    document.addEventListener('fullscreenchange', () => {
+        if (!document.fullscreenElement && !closingExam) {
+            reportSuspicious('Salir de pantalla completa', 'El estudiante salió del modo pantalla completa.');
+        }
+    });
 </script>
 {% endblock %}

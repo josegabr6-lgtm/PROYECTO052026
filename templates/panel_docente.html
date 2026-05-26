@@ -4,35 +4,28 @@
 
 {% block head %}
 <style>
-    body {
-        min-height: 100vh;
-    }
-
+    body { min-height: 100vh; }
     .navbar {
         background: #001233;
         box-shadow: 0 0 20px rgba(0, 183, 255, 0.3);
     }
-
     .navbar-brand {
         font-size: 26px;
         font-weight: bold;
         color: #00bfff !important;
     }
-
     .profile {
         display: flex;
         align-items: center;
         gap: 15px;
         color: #ccc;
     }
-
     .profile img {
         width: 45px;
         height: 45px;
         border-radius: 50%;
         border: 2px solid #00bfff;
     }
-
     .sidebar {
         position: fixed;
         top: 0;
@@ -44,7 +37,6 @@
         box-shadow: 0 0 20px rgba(0, 183, 255, 0.2);
         overflow-y: auto;
     }
-
     .sidebar a {
         display: block;
         color: white;
@@ -53,34 +45,25 @@
         transition: 0.3s;
         font-size: 17px;
     }
-
-    .sidebar a:hover,
-    .sidebar a.active {
+    .sidebar a:hover, .sidebar a.active {
         background: #00bfff;
         color: #001233;
         padding-left: 30px;
     }
-
     .sidebar .action-btn {
         margin: 15px 25px;
     }
-
     .content {
         margin-left: 240px;
         padding: 100px 30px 30px;
         min-height: calc(100vh - 100px);
     }
-
     .titulo h1 {
         font-size: 36px;
         font-weight: bold;
         color: #00bfff;
     }
-
-    .titulo p {
-        color: #ccc;
-    }
-
+    .titulo p { color: #ccc; }
     .card-system {
         background: rgba(255, 255, 255, 0.08);
         border: none;
@@ -92,18 +75,15 @@
         text-align: center;
         height: 100%;
     }
-
     .card-system:hover {
         transform: translateY(-5px);
         box-shadow: 0 0 30px rgba(0, 183, 255, 0.25);
     }
-
     .card-system i {
         font-size: 55px;
         color: #00bfff;
         margin-bottom: 20px;
     }
-
     .btn-system {
         background: linear-gradient(90deg, #0072ff, #00bfff);
         border: none;
@@ -113,31 +93,20 @@
         font-weight: bold;
         transition: 0.4s;
     }
-
     .btn-system:hover {
         transform: scale(1.02);
         box-shadow: 0 0 20px #00bfff;
     }
-
     @media (max-width: 991px) {
-        .sidebar {
-            position: relative;
-            width: 100%;
-            height: auto;
-            padding: 20px 0;
-        }
-
-        .content {
-            margin-left: 0;
-            padding-top: 30px;
-        }
+        .sidebar { position: relative; width: 100%; height: auto; padding: 20px 0; }
+        .content { margin-left: 0; padding-top: 30px; }
     }
 </style>
 {% endblock %}
 
 {% block content %}
 <nav class="navbar navbar-expand-lg navbar-dark px-4">
-    <a class="navbar-brand" href="#">Panel Docente</a>
+    <a class="navbar-brand" href="{{ url_for('panel') }}">Panel Docente</a>
     <div class="ms-auto profile">
         <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="Avatar">
         <span>{{ usuario }}</span>
@@ -145,12 +114,12 @@
 </nav>
 
 <div class="sidebar">
-    <a href="/docente_cursos"><i class="fas fa-book"></i> Curso</a>
-    <a href="/examenes_docente"><i class="fas fa-file-alt"></i> Exámenes</a>
-    <a href="/docente_reportes"><i class="fas fa-chart-line"></i> Reportes</a>
-    <a href="/docente_asistencia"><i class="fas fa-user-check"></i> Asistencia</a>
+    <a href="{{ url_for('docente_cursos') }}"><i class="fas fa-book"></i> Curso</a>
+    <a href="{{ url_for('examenes_docente') }}"><i class="fas fa-file-alt"></i> Exámenes</a>
+    <a href="{{ url_for('docente_reportes') }}"><i class="fas fa-chart-line"></i> Reportes</a>
+    <a href="{{ url_for('docente_asistencia') }}"><i class="fas fa-user-check"></i> Asistencia</a>
     <a href="{{ url_for('registro_estudiante') }}" class="btn btn-primary action-btn"><i class="fas fa-user-plus me-2"></i> REGISTRAR ESTUDIANTE</a>
-    <a href="/logout" class="btn btn-secondary action-btn"><i class="fas fa-sign-out-alt me-2"></i> CERRAR SESIÓN</a>
+    <a href="{{ url_for('logout') }}" class="btn btn-secondary action-btn"><i class="fas fa-sign-out-alt me-2"></i> CERRAR SESIÓN</a>
 </div>
 
 <div class="content">
@@ -165,7 +134,7 @@
                 <i class="fas fa-book"></i>
                 <h3>Mi curso</h3>
                 <p>Administra tu curso y revisa tus estudiantes.</p>
-                <button class="btn-system" onclick="window.location.href='/docente_cursos'">Ingresar</button>
+                <button class="btn-system" onclick="window.location.href='{{ url_for('docente_cursos') }}'">Ingresar</button>
             </div>
         </div>
         <div class="col-md-4">
@@ -173,7 +142,7 @@
                 <i class="fas fa-file-alt"></i>
                 <h3>Exámenes</h3>
                 <p>Crea y administra tus exámenes.</p>
-                <button class="btn-system" onclick="window.location.href='/examenes_docente'">Exámenes</button>
+                <button class="btn-system" onclick="window.location.href='{{ url_for('examenes_docente') }}'">Exámenes</button>
             </div>
         </div>
         <div class="col-md-4">
@@ -181,7 +150,7 @@
                 <i class="fas fa-chart-line"></i>
                 <h3>Reportes</h3>
                 <p>Revisa los incidentes sospechosos de tus estudiantes.</p>
-                <button class="btn-system" onclick="window.location.href='/docente_reportes'">Ver reportes</button>
+                <button class="btn-system" onclick="window.location.href='{{ url_for('docente_reportes') }}'">Ver reportes</button>
             </div>
         </div>
         <div class="col-md-4">
@@ -189,7 +158,7 @@
                 <i class="fas fa-user-check"></i>
                 <h3>Asistencia</h3>
                 <p>Registrar y monitorear asistencia.</p>
-                <button class="btn-system" onclick="window.location.href='/docente_asistencia'">Asistencia</button>
+                <button class="btn-system" onclick="window.location.href='{{ url_for('docente_asistencia') }}'">Asistencia</button>
             </div>
         </div>
     </div>

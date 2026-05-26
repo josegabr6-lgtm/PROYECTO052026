@@ -134,6 +134,7 @@
         font-weight: bold;
         transition: 0.4s;
         text-decoration: none;
+        cursor: pointer;
     }
 
     .btn-login:hover {
@@ -141,13 +142,50 @@
         box-shadow: 0 0 20px #00bfff;
     }
 
+    .toast {
+        position: fixed;
+        top: 30px;
+        left: 50%;
+        transform: translateX(-50%) translateY(-120px);
+        background: linear-gradient(90deg, #dc3545, #ff4757);
+        color: white;
+        padding: 16px 32px;
+        border-radius: 50px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        font-size: 16px;
+        font-weight: 600;
+        box-shadow: 0 10px 40px rgba(220, 53, 69, 0.5);
+        opacity: 0;
+        transition: all 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        z-index: 9999;
+        min-width: 320px;
+        justify-content: center;
+        border: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .toast.show {
+        transform: translateX(-50%) translateY(0);
+        opacity: 1;
+    }
+
+    @keyframes shake {
+        0%, 100% { transform: translateX(0); }
+        10%, 30%, 50%, 70%, 90% { transform: translateX(-6px); }
+        20%, 40%, 60%, 80% { transform: translateX(6px); }
+    }
+
+    .shake {
+        animation: shake 0.5s ease-in-out;
+    }
+
     @media(max-width:1000px) {
         .container-login {
             flex-direction: column;
             height: auto;
         }
-        .left,
-        .right {
+        .left, .right {
             width: 100%;
         }
         .left {
@@ -162,6 +200,11 @@
 {% endblock %}
 
 {% block content %}
+<div class="toast" id="toast">
+    <i class="fas fa-exclamation-circle"></i>
+    <span id="toastMessage">{{ error }}</span>
+</div>
+
 <div id="login-page">
     <div class="container-login">
         <div class="left">
@@ -174,14 +217,16 @@
                 <h2>INICIAR SESIÓN</h2>
                 <p>Sistema Web Seguro EMI Riberalta</p>
             </div>
-            <form id="loginForm" method="POST" action="/login">
+            <form id="loginForm" method="POST" action="{{ url_for('login') }}">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            
                 <div class="input-box">
                     <i class="fas fa-user"></i>
-                    <input type="text" name="usuario" id="usuario" placeholder="Usuario" required>
+                    <input type="text" name="usuario" id="usuario" placeholder="Usuario" required autocomplete="username">
                 </div>
                 <div class="input-box">
                     <i class="fas fa-lock"></i>
-                    <input type="password" name="password" id="password" placeholder="Contraseña" required>
+                    <input type="password" name="password" id="password" placeholder="Contraseña" required autocomplete="current-password">
                 </div>
                 <button type="submit" class="btn-login">
                     <i class="fas fa-sign-in-alt"></i> INICIAR SESIÓN
@@ -190,5 +235,21 @@
         </div>
     </div>
 </div>
-{% endblock %}
 
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const toast = document.getElementById('toast');
+        const loginForm = document.getElementById('loginForm');
+        const error = "{{ error }}";
+
+        if (error && error.trim() !== '') {
+            toast.classList.add('show');
+            loginForm.classList.add('shake');
+            setTimeout(() => loginForm.classList.remove('shake'), 500);
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 4000);
+        }
+    });
+</script>
+{% endblock %}

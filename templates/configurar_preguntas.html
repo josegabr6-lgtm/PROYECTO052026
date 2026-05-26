@@ -14,6 +14,10 @@
     }
     .bloque-pregunta {
         margin-bottom: 40px;
+        padding: 20px;
+        background: rgba(0, 18, 51, 0.5);
+        border-radius: 15px;
+        border: 1px solid rgba(0, 191, 255, 0.2);
     }
     .btn-primary {
         background: linear-gradient(90deg,#0072ff,#00bfff);
@@ -31,13 +35,26 @@
 {% block content %}
 <div class="container container-app">
     <h2 class="text-center mb-4">Configurar preguntas para el examen: {{ examen.titulo }}</h2>
-    <form method="POST" action="/guardar_preguntas">
+    
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+    <form method="POST" action="{{ url_for('guardar_preguntas') }}">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
         <input type="hidden" name="id_examen" value="{{ examen.id_examen }}">
         <input type="hidden" name="num_preguntas" value="{{ examen.num_preguntas }}">
 
         {% for i in range(examen.num_preguntas) %}
         <div class="bloque-pregunta">
-            <h5>Pregunta {{ i + 1 }}</h5>
+            <h5 class="text-info mb-3"><i class="fas fa-question-circle me-2"></i>Pregunta {{ i + 1 }}</h5>
             <div class="mb-3">
                 <textarea class="form-control" name="pregunta_{{ i }}" placeholder="Escribe la pregunta" rows="3" required></textarea>
             </div>
@@ -54,7 +71,9 @@
         {% endfor %}
 
         <div class="text-center">
-            <button type="submit" class="btn btn-primary">Guardar preguntas</button>
+            <button type="submit" class="btn btn-primary">
+                <i class="fas fa-save me-2"></i>Guardar preguntas
+            </button>
         </div>
     </form>
 </div>
@@ -69,6 +88,7 @@
 
         if (tipo === "vf") {
             contenedor.innerHTML = `
+                <label class="text-white mb-2">Respuesta correcta:</label>
                 <select class="form-control" name="respuesta_correcta_${index}" required>
                     <option value="">Selecciona respuesta</option>
                     <option value="Verdadero">Verdadero</option>
@@ -77,14 +97,16 @@
             `;
         } else if (tipo === "seleccion") {
             contenedor.innerHTML = `
+                <label class="text-white mb-2">Opciones:</label>
                 <input type="text" class="form-control option-input" name="opcion_a_${index}" placeholder="Opción A" required>
                 <input type="text" class="form-control option-input" name="opcion_b_${index}" placeholder="Opción B" required>
                 <input type="text" class="form-control option-input" name="opcion_c_${index}" placeholder="Opción C" required>
                 <input type="text" class="form-control option-input" name="opcion_d_${index}" placeholder="Opción D" required>
-                <input type="text" class="form-control option-input" name="respuesta_correcta_${index}" placeholder="Respuesta correcta (A, B, C o D)" required>
+                <input type="text" class="form-control option-input" name="respuesta_correcta_${index}" placeholder="Respuesta correcta (A, B, C o D)" required pattern="[A-Da-d]" title="Ingrese A, B, C o D">
             `;
         } else if (tipo === "abierta") {
             contenedor.innerHTML = `
+                <label class="text-white mb-2">Respuesta esperada:</label>
                 <input type="text" class="form-control option-input" name="respuesta_texto_${index}" placeholder="Respuesta abierta" required>
             `;
         }

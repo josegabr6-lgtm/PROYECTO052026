@@ -14,28 +14,39 @@
         font-weight: bold;
         margin: 20px 0;
     }
+    .resultado-card {
+        background: rgba(0, 18, 51, 0.5);
+        border-radius: 20px;
+        padding: 40px;
+        border: 1px solid rgba(0, 191, 255, 0.2);
+    }
 </style>
 {% endblock %}
 
 {% block content %}
 <div class="container container-app text-center">
-    <h2 class="mb-4">Has completado el examen: {{ titulo }}</h2>
-    <p class="puntaje">Tu puntaje: {{ puntaje }}%</p>
+    <div class="resultado-card">
+        <h2 class="mb-4">Has completado el examen: {{ titulo }}</h2>
+        <p class="puntaje">Tu puntaje: {{ puntaje }}%</p>
 
-    {% if puntaje >= 80 %}
-        <p class="text-success">¡Excelente trabajo! 🚀</p>
-    {% elif puntaje >= 50 %}
-        <p class="text-info">Buen esfuerzo, sigue practicando 💪</p>
-    {% else %}
-        <p class="text-danger">No te desanimes, ¡tú puedes mejorar! 🔥</p>
-    {% endif %}
+        {% if puntaje >= 80 %}
+            <p class="text-success fs-4">¡Excelente trabajo! 🚀</p>
+        {% elif puntaje >= 50 %}
+            <p class="text-info fs-4">Buen esfuerzo, sigue practicando 💪</p>
+        {% else %}
+            <p class="text-danger fs-4">No te desanimes, ¡tú puedes mejorar! 🔥</p>
+        {% endif %}
 
-    {% if auto_submit %}
-        <div class="alert alert-warning mt-4">
-            Tu examen fue cerrado automáticamente después de detectar tres actividades sospechosas. Las respuestas actuales fueron enviadas al docente.
-        </div>
-    {% endif %}
+        {% if auto_submit %}
+            <div class="alert alert-warning mt-4">
+                <i class="fas fa-exclamation-triangle me-2"></i>
+                Tu examen fue cerrado automáticamente después de detectar tres actividades sospechosas. Las respuestas actuales fueron enviadas al docente.
+            </div>
+        {% endif %}
 
-    <a href="/panel" class="btn btn-primary mt-4">Volver al panel</a>
+        <a href="{{ url_for('panel') }}" class="btn btn-primary mt-4">
+            <i class="fas fa-home me-2"></i>Volver al panel
+        </a>
+    </div>
 </div>
 {% endblock %}

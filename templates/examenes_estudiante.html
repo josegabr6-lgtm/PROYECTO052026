@@ -16,6 +16,17 @@
 <div class="container container-app">
     <h2 class="text-center mb-4">Exámenes disponibles</h2>
 
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
     <div class="table-responsive">
         <table class="table table-dark table-striped align-middle">
             <thead>
@@ -37,10 +48,9 @@
                     <td>{{ examen.fecha }}</td>
                     <td>{{ examen.num_preguntas }}</td>
                     <td>
-                        <form method="GET" action="/resolver_examen" class="m-0">
-                            <input type="hidden" name="id_examen" value="{{ examen.id_examen }}">
-                            <button type="submit" class="btn btn-primary btn-sm">Resolver</button>
-                        </form>
+                        <a href="{{ url_for('resolver_examen', id_examen=examen.id_examen) }}" class="btn btn-primary btn-sm">
+                            <i class="fas fa-pen me-1"></i>Resolver
+                        </a>
                     </td>
                 </tr>
                 {% endfor %}
@@ -49,7 +59,7 @@
     </div>
 
     <div class="text-center mt-4">
-        <a href="/panel" class="btn btn-primary">Volver</a>
+        <a href="{{ url_for('panel') }}" class="btn btn-primary">Volver</a>
     </div>
 </div>
 {% endblock %}

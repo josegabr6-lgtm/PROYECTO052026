@@ -9,6 +9,7 @@
         padding: 20px;
         background: #001233;
         border-radius: 15px;
+        border: 1px solid rgba(0, 191, 255, 0.2);
     }
     .tipo {
         color: #00bfff;
@@ -16,6 +17,11 @@
     }
     .opcion {
         margin-left: 20px;
+        color: #ccc;
+    }
+    .respuesta-correcta {
+        color: #00ff88;
+        font-weight: bold;
     }
     .btn-primary {
         border-radius: 10px;
@@ -32,27 +38,29 @@
     {% for p in preguntas %}
     <div class="pregunta">
         <p><strong>{{ loop.index }}. {{ p.pregunta }}</strong></p>
-        <p class="tipo">Tipo: {{ p.tipo }}</p>
+        <p class="tipo"><i class="fas fa-tag me-2"></i>Tipo: {{ p.tipo }}</p>
 
         {% if p.tipo == 'vf' %}
             <p class="opcion">Opciones: Verdadero / Falso</p>
-            <p>Respuesta correcta: {{ p.correcta }}</p>
+            <p class="respuesta-correcta"><i class="fas fa-check-circle me-2"></i>Respuesta correcta: {{ p.correcta }}</p>
 
         {% elif p.tipo == 'seleccion' %}
             <p class="opcion">A) {{ p.a }}</p>
             <p class="opcion">B) {{ p.b }}</p>
             <p class="opcion">C) {{ p.c }}</p>
             <p class="opcion">D) {{ p.d }}</p>
-            <p>Respuesta correcta: {{ p.correcta }}</p>
+            <p class="respuesta-correcta"><i class="fas fa-check-circle me-2"></i>Respuesta correcta: {{ p.correcta }}</p>
 
         {% elif p.tipo == 'abierta' %}
-            <p>Respuesta esperada: {{ p.texto }}</p>
+            <p class="respuesta-correcta"><i class="fas fa-check-circle me-2"></i>Respuesta esperada: {{ p.texto }}</p>
         {% endif %}
     </div>
     {% endfor %}
 
     <div class="text-center">
-        <a href="/examenes_docente" class="btn btn-primary">Volver</a>
+        <a href="{{ url_for('examenes_docente') }}" class="btn btn-primary">
+            <i class="fas fa-arrow-left me-2"></i>Volver
+        </a>
     </div>
 </div>
 {% endblock %}

@@ -1,0 +1,50 @@
+2026-05-25 20:34:58,400 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.1.6:5000
+2026-05-25 20:34:58,401 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2026-05-25 20:35:06,367 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 20:35:06] "[32mGET / HTTP/1.1[0m" 302 -
+2026-05-25 20:35:06,762 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 20:35:06] "GET /login HTTP/1.1" 200 -
+2026-05-25 20:35:06,929 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 20:35:06] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2026-05-25 20:35:06,931 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 20:35:06] "[36mGET /static/logoemi.png HTTP/1.1[0m" 304 -
+2026-05-25 20:35:12,378 - __main__ - INFO - Login exitoso: USU (rol: estudiante)
+2026-05-25 20:35:12,387 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 20:35:12] "[32mPOST /login HTTP/1.1[0m" 302 -
+2026-05-25 20:35:12,502 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 20:35:12] "GET /panel HTTP/1.1" 200 -
+2026-05-25 20:35:12,529 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 20:35:12] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2026-05-25 20:35:14,137 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 20:35:14] "GET /examenes_estudiante HTTP/1.1" 200 -
+2026-05-25 20:35:14,158 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 20:35:14] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2026-05-25 20:35:15,425 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 20:35:15] "GET /panel HTTP/1.1" 200 -
+2026-05-25 20:35:15,451 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 20:35:15] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2026-05-25 20:35:28,176 - __main__ - INFO - Login exitoso: MARI (rol: docente)
+2026-05-25 20:35:28,179 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 20:35:28] "[32mPOST /login HTTP/1.1[0m" 302 -
+2026-05-25 20:35:28,245 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 20:35:28] "GET /panel HTTP/1.1" 200 -
+2026-05-25 20:35:28,268 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 20:35:28] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2026-05-25 20:35:30,040 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 20:35:30] "GET /examenes_docente HTTP/1.1" 200 -
+2026-05-25 20:35:30,066 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 20:35:30] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2026-05-25 20:35:32,496 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 20:35:32] "GET /ver_preguntas?id_examen=4 HTTP/1.1" 200 -
+2026-05-25 20:35:32,508 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 20:35:32] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2026-05-25 20:35:33,656 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 20:35:33] "GET /examenes_docente HTTP/1.1" 200 -
+2026-05-25 20:35:33,684 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 20:35:33] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2026-05-25 20:35:35,461 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 20:35:35] "GET /configurar_preguntas?id_examen=4 HTTP/1.1" 200 -
+2026-05-25 20:35:35,479 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 20:35:35] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2026-05-25 20:35:47,318 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 20:35:47] "GET /registro_estudiante HTTP/1.1" 200 -
+2026-05-25 20:35:47,344 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 20:35:47] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2026-05-25 20:48:46,447 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.1.6:5000
+2026-05-25 20:48:46,447 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2026-05-25 20:48:49,521 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 20:48:49] "[32mGET / HTTP/1.1[0m" 302 -
+2026-05-25 20:48:49,677 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 20:48:49] "GET /login HTTP/1.1" 200 -
+2026-05-25 20:48:49,859 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 20:48:49] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2026-05-25 20:48:49,873 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 20:48:49] "[36mGET /static/logoemi.png HTTP/1.1[0m" 304 -
+2026-05-25 20:48:58,446 - __main__ - WARNING - Intento de login fallido: USU desde 192.168.1.6
+2026-05-25 20:48:58,449 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 20:48:58] "POST /login HTTP/1.1" 200 -
+2026-05-25 20:48:58,466 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 20:48:58] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2026-05-25 20:48:58,468 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 20:48:58] "[36mGET /static/logoemi.png HTTP/1.1[0m" 304 -
+2026-05-25 20:49:04,190 - __main__ - WARNING - Intento de login fallido: 111 desde 192.168.1.6
+2026-05-25 20:49:04,192 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 20:49:04] "POST /login HTTP/1.1" 200 -
+2026-05-25 20:49:04,228 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 20:49:04] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2026-05-25 20:49:04,231 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 20:49:04] "[36mGET /static/logoemi.png HTTP/1.1[0m" 304 -
+2026-05-25 20:49:07,907 - flask-limiter - INFO - ratelimit 3 per 1 minute (192.168.1.6) exceeded at endpoint: login
+2026-05-25 20:49:07,909 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 20:49:07] "[31m[1mPOST /login HTTP/1.1[0m" 429 -

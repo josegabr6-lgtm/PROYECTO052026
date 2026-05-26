@@ -22,19 +22,36 @@
     .sidebar {
         width: 230px;
         min-height: 100vh;
+        position: fixed;
+        top: 0;
+        left: 0;
+        background: #001845;
+        padding-top: 80px;
+        box-shadow: 0 0 20px rgba(0, 183, 255, 0.2);
+    }
+    .sidebar a {
+        display: block;
+        color: white;
+        padding: 15px 25px;
+        text-decoration: none;
+        transition: 0.3s;
+        font-size: 17px;
+    }
+    .sidebar a:hover {
+        background: #00bfff;
+        color: #001233;
+        padding-left: 30px;
     }
     .content {
         margin-left: 230px;
-        padding: 30px;
+        padding: 100px 30px 30px;
     }
     .titulo h1 {
         font-size: 36px;
         font-weight: bold;
         color: #00bfff;
     }
-    .titulo p {
-        color: #ccc;
-    }
+    .titulo p { color: #ccc; }
     .btn-system {
         background: linear-gradient(90deg,#0072ff,#00bfff);
         border: none;
@@ -47,12 +64,36 @@
         transform: scale(1.05);
         box-shadow: 0 0 20px #00bfff;
     }
+    .card-system {
+        background: rgba(255, 255, 255, 0.08);
+        border: none;
+        border-radius: 20px;
+        padding: 30px;
+        color: white;
+        transition: 0.4s;
+        box-shadow: 0 0 20px rgba(0, 183, 255, 0.1);
+        text-align: center;
+        height: 100%;
+    }
+    .card-system:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 0 30px rgba(0, 183, 255, 0.25);
+    }
+    .card-system i {
+        font-size: 55px;
+        color: #00bfff;
+        margin-bottom: 20px;
+    }
+    @media (max-width: 991px) {
+        .sidebar { position: relative; width: 100%; height: auto; padding: 20px 0; }
+        .content { margin-left: 0; padding-top: 30px; }
+    }
 </style>
 {% endblock %}
 
 {% block content %}
-<nav class="navbar navbar-expand-lg navbar-dark px-4">
-    <a class="navbar-brand" href="#">Panel Estudiante</a>
+<nav class="navbar navbar-expand-lg navbar-dark px-4 fixed-top">
+    <a class="navbar-brand" href="{{ url_for('panel') }}">Panel Estudiante</a>
     <div class="ms-auto profile">
         <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="Avatar">
         <span>{{ usuario }}</span>
@@ -60,10 +101,10 @@
 </nav>
 
 <div class="sidebar">
-        <a href="/examenes_estudiante"><i class="fas fa-file-alt"></i> Exámenes</a>
-        <a href="/resultados_estudiante"><i class="fas fa-chart-bar"></i> Resultados</a>
-        <a href="/asistencia_estudiante"><i class="fas fa-user-check"></i> Asistencia</a>
-        <a href="/logout"><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</a>
+    <a href="{{ url_for('examenes_estudiante') }}"><i class="fas fa-file-alt"></i> Exámenes</a>
+    <a href="{{ url_for('resultados_estudiante') }}"><i class="fas fa-chart-bar"></i> Resultados</a>
+    <a href="{{ url_for('asistencia_estudiante') }}"><i class="fas fa-user-check"></i> Asistencia</a>
+    <a href="{{ url_for('logout') }}"><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</a>
 </div>
 
 <div class="content">
@@ -78,7 +119,7 @@
                 <i class="fas fa-file-alt"></i>
                 <h3>Exámenes</h3>
                 <p>Presenta tus evaluaciones en línea.</p>
-                <button class="btn-system" onclick="window.location.href='/examenes_estudiante'">Ingresar</button>
+                <button class="btn-system" onclick="window.location.href='{{ url_for('examenes_estudiante') }}'">Ingresar</button>
             </div>
         </div>
         <div class="col-md-4">
@@ -86,7 +127,7 @@
                 <i class="fas fa-chart-bar"></i>
                 <h3>Resultados</h3>
                 <p>Consulta tus calificaciones.</p>
-                <button class="btn-system" onclick="window.location.href='/resultados_estudiante'">Ver Resultados</button>
+                <button class="btn-system" onclick="window.location.href='{{ url_for('resultados_estudiante') }}'">Ver Resultados</button>
             </div>
         </div>
         <div class="col-md-4">
@@ -94,7 +135,7 @@
                 <i class="fas fa-user-check"></i>
                 <h3>Asistencia</h3>
                 <p>Revisa tu registro de asistencia.</p>
-                <button class="btn-system" onclick="window.location.href='/asistencia_estudiante'">Asistencia</button>
+                <button class="btn-system" onclick="window.location.href='{{ url_for('asistencia_estudiante') }}'">Asistencia</button>
             </div>
         </div>
     </div>

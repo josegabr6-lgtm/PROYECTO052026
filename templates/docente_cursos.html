@@ -28,10 +28,21 @@
                 <p class="mb-0">Aquí puedes ver a los estudiantes asignados a tu curso.</p>
             </div>
             <div class="text-md-end">
-                <a href="/panel" class="btn btn-secondary">Volver al panel</a>
+                <a href="{{ url_for('panel') }}" class="btn btn-secondary">Volver al panel</a>
             </div>
         </div>
     </div>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
 
     {% if info_message %}
     <div class="alert alert-info">{{ info_message }}</div>

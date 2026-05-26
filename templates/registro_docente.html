@@ -25,27 +25,33 @@
 {% block content %}
 <div class="container container-app">
     <h2 class="text-center mb-4">Registrar nuevo docente</h2>
-    <form method="POST" action="/registro_docente">
+    <form method="POST" action="{{ url_for('registro_docente') }}">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+        
         <div class="mb-3">
-            <input type="text" class="form-control" name="nombre" placeholder="Nombre" required>
+            <input type="text" class="form-control" name="nombre" placeholder="Nombre" required autocomplete="given-name">
         </div>
         <div class="mb-3">
-            <input type="text" class="form-control" name="apellido" placeholder="Apellido" required>
+            <input type="text" class="form-control" name="apellido" placeholder="Apellido" required autocomplete="family-name">
         </div>
         <div class="mb-3">
-            <input type="text" class="form-control" name="usuario" placeholder="Usuario" required>
+            <input type="text" class="form-control" name="usuario" placeholder="Usuario" required autocomplete="username">
         </div>
         <div class="mb-3">
-            <input type="email" class="form-control" name="correo" placeholder="Correo electrónico" required>
+            <input type="email" class="form-control" name="correo" placeholder="Correo electrónico" required autocomplete="email">
         </div>
         <div class="mb-3">
-            <input type="password" class="form-control" name="password" placeholder="Contraseña" required>
+            <input type="password" class="form-control" name="password" placeholder="Contraseña" required minlength="6" autocomplete="new-password">
         </div>
         <button type="submit" class="btn btn-primary w-100">Registrar docente</button>
     </form>
 
-    {% if mensaje %}
-    <p class="text-center text-info mt-4">{{ mensaje }}</p>
-    {% endif %}
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="alert alert-{{ category }} mt-4 text-center">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
 </div>
 {% endblock %}

@@ -10,6 +10,8 @@
     .table td, .table th {
         vertical-align: middle;
     }
+    .estado-cerrado { color: #dc3545; font-weight: bold; }
+    .estado-abierto { color: #00ff88; font-weight: bold; }
 </style>
 {% endblock %}
 
@@ -20,8 +22,19 @@
             <h1>Reportes de Seguridad</h1>
             <p>Incidentes detectados durante los exámenes de tus estudiantes.</p>
         </div>
-        <a href="/panel" class="btn btn-secondary">Volver al panel</a>
+        <a href="{{ url_for('panel') }}" class="btn btn-secondary">Volver al panel</a>
     </div>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
 
     {% if reportes %}
     <div class="table-responsive">
@@ -46,10 +59,12 @@
                     <td>{{ reporte[1] }}</td>
                     <td>{{ reporte[2] }}</td>
                     <td>{{ reporte[3] or 'Sin examen' }}</td>
-                    <td>{{ reporte[4] }}</td>
+                    <td><span class="badge bg-warning text-dark">{{ reporte[4] }}</span></td>
                     <td>{{ reporte[5] }}</td>
                     <td>{{ reporte[6] }}</td>
-                    <td>{{ reporte[7] }}</td>
+                    <td class="{% if reporte[7] == 'cerrado' %}estado-cerrado{% else %}estado-abierto{% endif %}">
+                        {{ reporte[7]|upper }}
+                    </td>
                     <td>{{ reporte[8] }}</td>
                 </tr>
                 {% endfor %}
