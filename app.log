@@ -48,3 +48,420 @@
 2026-05-25 20:49:04,231 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 20:49:04] "[36mGET /static/logoemi.png HTTP/1.1[0m" 304 -
 2026-05-25 20:49:07,907 - flask-limiter - INFO - ratelimit 3 per 1 minute (192.168.1.6) exceeded at endpoint: login
 2026-05-25 20:49:07,909 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 20:49:07] "[31m[1mPOST /login HTTP/1.1[0m" 429 -
+2026-05-25 21:04:02,315 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.1.6:5000
+2026-05-25 21:04:02,315 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2026-05-25 21:04:06,097 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 21:04:06] "[32mGET / HTTP/1.1[0m" 302 -
+2026-05-25 21:04:06,388 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 21:04:06] "GET /login HTTP/1.1" 200 -
+2026-05-25 21:04:06,546 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 21:04:06] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2026-05-25 21:04:06,548 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 21:04:06] "[36mGET /static/logoemi.png HTTP/1.1[0m" 304 -
+2026-05-25 21:04:14,012 - __main__ - WARNING - Intento de login fallido: ADRI desde 192.168.1.6
+2026-05-25 21:04:14,015 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 21:04:14] "POST /login HTTP/1.1" 200 -
+2026-05-25 21:04:14,033 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 21:04:14] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2026-05-25 21:04:14,035 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 21:04:14] "[36mGET /static/logoemi.png HTTP/1.1[0m" 304 -
+2026-05-25 21:04:21,613 - __main__ - WARNING - Intento de login fallido: ew desde 192.168.1.6
+2026-05-25 21:04:21,617 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 21:04:21] "POST /login HTTP/1.1" 200 -
+2026-05-25 21:04:21,651 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 21:04:21] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2026-05-25 21:04:21,661 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 21:04:21] "[36mGET /static/logoemi.png HTTP/1.1[0m" 304 -
+2026-05-25 21:04:25,271 - flask-limiter - INFO - ratelimit 3 per 1 minute (192.168.1.6) exceeded at endpoint: login
+2026-05-25 21:04:25,274 - __main__ - WARNING - Rate limit excedido desde 192.168.1.6. Espera: Nones
+2026-05-25 21:04:25,276 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 21:04:25] "[32mPOST /login HTTP/1.1[0m" 302 -
+2026-05-25 21:04:25,299 - flask-limiter - INFO - ratelimit 3 per 1 minute (192.168.1.6) exceeded at endpoint: login
+2026-05-25 21:04:25,300 - __main__ - WARNING - Rate limit excedido desde 192.168.1.6. Espera: Nones
+2026-05-25 21:04:25,302 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 21:04:25] "[32mGET /login HTTP/1.1[0m" 302 -
+2026-05-25 21:04:25,321 - flask-limiter - INFO - ratelimit 3 per 1 minute (192.168.1.6) exceeded at endpoint: login
+2026-05-25 21:04:25,325 - __main__ - WARNING - Rate limit excedido desde 192.168.1.6. Espera: Nones
+2026-05-25 21:04:25,326 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 21:04:25] "[32mGET /login HTTP/1.1[0m" 302 -
+2026-05-25 21:04:25,339 - flask-limiter - INFO - ratelimit 3 per 1 minute (192.168.1.6) exceeded at endpoint: login
+2026-05-25 21:04:25,340 - __main__ - WARNING - Rate limit excedido desde 192.168.1.6. Espera: Nones
+2026-05-25 21:04:25,340 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 21:04:25] "[32mGET /login HTTP/1.1[0m" 302 -
+2026-05-25 21:04:25,350 - flask-limiter - INFO - ratelimit 3 per 1 minute (192.168.1.6) exceeded at endpoint: login
+2026-05-25 21:04:25,351 - __main__ - WARNING - Rate limit excedido desde 192.168.1.6. Espera: Nones
+2026-05-25 21:04:25,353 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 21:04:25] "[32mGET /login HTTP/1.1[0m" 302 -
+2026-05-25 21:04:25,366 - flask-limiter - INFO - ratelimit 3 per 1 minute (192.168.1.6) exceeded at endpoint: login
+2026-05-25 21:04:25,367 - __main__ - WARNING - Rate limit excedido desde 192.168.1.6. Espera: Nones
+2026-05-25 21:04:25,369 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 21:04:25] "[32mGET /login HTTP/1.1[0m" 302 -
+2026-05-25 21:04:25,393 - flask-limiter - INFO - ratelimit 3 per 1 minute (192.168.1.6) exceeded at endpoint: login
+2026-05-25 21:04:25,393 - __main__ - WARNING - Rate limit excedido desde 192.168.1.6. Espera: Nones
+2026-05-25 21:04:25,394 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 21:04:25] "[32mGET /login HTTP/1.1[0m" 302 -
+2026-05-25 21:04:25,410 - flask-limiter - INFO - ratelimit 3 per 1 minute (192.168.1.6) exceeded at endpoint: login
+2026-05-25 21:04:25,411 - __main__ - WARNING - Rate limit excedido desde 192.168.1.6. Espera: Nones
+2026-05-25 21:04:25,412 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 21:04:25] "[32mGET /login HTTP/1.1[0m" 302 -
+2026-05-25 21:04:25,429 - flask-limiter - INFO - ratelimit 3 per 1 minute (192.168.1.6) exceeded at endpoint: login
+2026-05-25 21:04:25,430 - __main__ - WARNING - Rate limit excedido desde 192.168.1.6. Espera: Nones
+2026-05-25 21:04:25,432 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 21:04:25] "[32mGET /login HTTP/1.1[0m" 302 -
+2026-05-25 21:04:25,457 - flask-limiter - INFO - ratelimit 3 per 1 minute (192.168.1.6) exceeded at endpoint: login
+2026-05-25 21:04:25,458 - __main__ - WARNING - Rate limit excedido desde 192.168.1.6. Espera: Nones
+2026-05-25 21:04:25,459 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 21:04:25] "[32mGET /login HTTP/1.1[0m" 302 -
+2026-05-25 21:04:25,469 - flask-limiter - INFO - ratelimit 3 per 1 minute (192.168.1.6) exceeded at endpoint: login
+2026-05-25 21:04:25,470 - __main__ - WARNING - Rate limit excedido desde 192.168.1.6. Espera: Nones
+2026-05-25 21:04:25,472 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 21:04:25] "[32mGET /login HTTP/1.1[0m" 302 -
+2026-05-25 21:04:25,490 - flask-limiter - INFO - ratelimit 3 per 1 minute (192.168.1.6) exceeded at endpoint: login
+2026-05-25 21:04:25,490 - __main__ - WARNING - Rate limit excedido desde 192.168.1.6. Espera: Nones
+2026-05-25 21:04:25,491 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 21:04:25] "[32mGET /login HTTP/1.1[0m" 302 -
+2026-05-25 21:04:25,504 - flask-limiter - INFO - ratelimit 3 per 1 minute (192.168.1.6) exceeded at endpoint: login
+2026-05-25 21:04:25,505 - __main__ - WARNING - Rate limit excedido desde 192.168.1.6. Espera: Nones
+2026-05-25 21:04:25,507 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 21:04:25] "[32mGET /login HTTP/1.1[0m" 302 -
+2026-05-25 21:04:25,527 - flask-limiter - INFO - ratelimit 3 per 1 minute (192.168.1.6) exceeded at endpoint: login
+2026-05-25 21:04:25,527 - __main__ - WARNING - Rate limit excedido desde 192.168.1.6. Espera: Nones
+2026-05-25 21:04:25,528 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 21:04:25] "[32mGET /login HTTP/1.1[0m" 302 -
+2026-05-25 21:04:25,544 - flask-limiter - INFO - ratelimit 3 per 1 minute (192.168.1.6) exceeded at endpoint: login
+2026-05-25 21:04:25,545 - __main__ - WARNING - Rate limit excedido desde 192.168.1.6. Espera: Nones
+2026-05-25 21:04:25,546 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 21:04:25] "[32mGET /login HTTP/1.1[0m" 302 -
+2026-05-25 21:04:25,560 - flask-limiter - INFO - ratelimit 3 per 1 minute (192.168.1.6) exceeded at endpoint: login
+2026-05-25 21:04:25,560 - __main__ - WARNING - Rate limit excedido desde 192.168.1.6. Espera: Nones
+2026-05-25 21:04:25,561 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 21:04:25] "[32mGET /login HTTP/1.1[0m" 302 -
+2026-05-25 21:04:25,577 - flask-limiter - INFO - ratelimit 3 per 1 minute (192.168.1.6) exceeded at endpoint: login
+2026-05-25 21:04:25,578 - __main__ - WARNING - Rate limit excedido desde 192.168.1.6. Espera: Nones
+2026-05-25 21:04:25,580 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 21:04:25] "[32mGET /login HTTP/1.1[0m" 302 -
+2026-05-25 21:04:25,600 - flask-limiter - INFO - ratelimit 3 per 1 minute (192.168.1.6) exceeded at endpoint: login
+2026-05-25 21:04:25,601 - __main__ - WARNING - Rate limit excedido desde 192.168.1.6. Espera: Nones
+2026-05-25 21:04:25,603 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 21:04:25] "[32mGET /login HTTP/1.1[0m" 302 -
+2026-05-25 21:04:25,613 - flask-limiter - INFO - ratelimit 3 per 1 minute (192.168.1.6) exceeded at endpoint: login
+2026-05-25 21:04:25,614 - __main__ - WARNING - Rate limit excedido desde 192.168.1.6. Espera: Nones
+2026-05-25 21:04:25,615 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 21:04:25] "[32mGET /login HTTP/1.1[0m" 302 -
+2026-05-25 21:04:25,632 - flask-limiter - INFO - ratelimit 3 per 1 minute (192.168.1.6) exceeded at endpoint: login
+2026-05-25 21:04:25,632 - __main__ - WARNING - Rate limit excedido desde 192.168.1.6. Espera: Nones
+2026-05-25 21:04:25,633 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 21:04:25] "[32mGET /login HTTP/1.1[0m" 302 -
+2026-05-25 21:04:26,770 - flask-limiter - INFO - ratelimit 3 per 1 minute (192.168.1.6) exceeded at endpoint: login
+2026-05-25 21:04:26,771 - __main__ - WARNING - Rate limit excedido desde 192.168.1.6. Espera: Nones
+2026-05-25 21:04:26,772 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 21:04:26] "[32mGET /login HTTP/1.1[0m" 302 -
+2026-05-25 21:04:26,782 - flask-limiter - INFO - ratelimit 3 per 1 minute (192.168.1.6) exceeded at endpoint: login
+2026-05-25 21:04:26,784 - __main__ - WARNING - Rate limit excedido desde 192.168.1.6. Espera: Nones
+2026-05-25 21:04:26,785 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 21:04:26] "[32mGET /login HTTP/1.1[0m" 302 -
+2026-05-25 21:04:26,797 - flask-limiter - INFO - ratelimit 3 per 1 minute (192.168.1.6) exceeded at endpoint: login
+2026-05-25 21:04:26,797 - __main__ - WARNING - Rate limit excedido desde 192.168.1.6. Espera: Nones
+2026-05-25 21:04:26,799 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 21:04:26] "[32mGET /login HTTP/1.1[0m" 302 -
+2026-05-25 21:04:26,817 - flask-limiter - INFO - ratelimit 3 per 1 minute (192.168.1.6) exceeded at endpoint: login
+2026-05-25 21:04:26,820 - __main__ - WARNING - Rate limit excedido desde 192.168.1.6. Espera: Nones
+2026-05-25 21:04:26,823 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 21:04:26] "[32mGET /login HTTP/1.1[0m" 302 -
+2026-05-25 21:04:26,836 - flask-limiter - INFO - ratelimit 3 per 1 minute (192.168.1.6) exceeded at endpoint: login
+2026-05-25 21:04:26,841 - __main__ - WARNING - Rate limit excedido desde 192.168.1.6. Espera: Nones
+2026-05-25 21:04:26,842 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 21:04:26] "[32mGET /login HTTP/1.1[0m" 302 -
+2026-05-25 21:04:26,862 - flask-limiter - INFO - ratelimit 3 per 1 minute (192.168.1.6) exceeded at endpoint: login
+2026-05-25 21:04:26,863 - __main__ - WARNING - Rate limit excedido desde 192.168.1.6. Espera: Nones
+2026-05-25 21:04:26,869 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 21:04:26] "[32mGET /login HTTP/1.1[0m" 302 -
+2026-05-25 21:04:26,894 - flask-limiter - INFO - ratelimit 3 per 1 minute (192.168.1.6) exceeded at endpoint: login
+2026-05-25 21:04:26,895 - __main__ - WARNING - Rate limit excedido desde 192.168.1.6. Espera: Nones
+2026-05-25 21:04:26,896 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 21:04:26] "[32mGET /login HTTP/1.1[0m" 302 -
+2026-05-25 21:04:26,914 - flask-limiter - INFO - ratelimit 3 per 1 minute (192.168.1.6) exceeded at endpoint: login
+2026-05-25 21:04:26,918 - __main__ - WARNING - Rate limit excedido desde 192.168.1.6. Espera: Nones
+2026-05-25 21:04:26,920 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 21:04:26] "[32mGET /login HTTP/1.1[0m" 302 -
+2026-05-25 21:04:26,942 - flask-limiter - INFO - ratelimit 3 per 1 minute (192.168.1.6) exceeded at endpoint: login
+2026-05-25 21:04:26,944 - __main__ - WARNING - Rate limit excedido desde 192.168.1.6. Espera: Nones
+2026-05-25 21:04:26,945 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 21:04:26] "[32mGET /login HTTP/1.1[0m" 302 -
+2026-05-25 21:04:26,962 - flask-limiter - INFO - ratelimit 3 per 1 minute (192.168.1.6) exceeded at endpoint: login
+2026-05-25 21:04:26,963 - __main__ - WARNING - Rate limit excedido desde 192.168.1.6. Espera: Nones
+2026-05-25 21:04:26,967 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 21:04:26] "[32mGET /login HTTP/1.1[0m" 302 -
+2026-05-25 21:04:26,989 - flask-limiter - INFO - ratelimit 3 per 1 minute (192.168.1.6) exceeded at endpoint: login
+2026-05-25 21:04:26,992 - __main__ - WARNING - Rate limit excedido desde 192.168.1.6. Espera: Nones
+2026-05-25 21:04:26,994 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 21:04:26] "[32mGET /login HTTP/1.1[0m" 302 -
+2026-05-25 21:04:27,010 - flask-limiter - INFO - ratelimit 3 per 1 minute (192.168.1.6) exceeded at endpoint: login
+2026-05-25 21:04:27,011 - __main__ - WARNING - Rate limit excedido desde 192.168.1.6. Espera: Nones
+2026-05-25 21:04:27,012 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 21:04:27] "[32mGET /login HTTP/1.1[0m" 302 -
+2026-05-25 21:04:27,028 - flask-limiter - INFO - ratelimit 3 per 1 minute (192.168.1.6) exceeded at endpoint: login
+2026-05-25 21:04:27,029 - __main__ - WARNING - Rate limit excedido desde 192.168.1.6. Espera: Nones
+2026-05-25 21:04:27,031 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 21:04:27] "[32mGET /login HTTP/1.1[0m" 302 -
+2026-05-25 21:04:27,052 - flask-limiter - INFO - ratelimit 3 per 1 minute (192.168.1.6) exceeded at endpoint: login
+2026-05-25 21:04:27,053 - __main__ - WARNING - Rate limit excedido desde 192.168.1.6. Espera: Nones
+2026-05-25 21:04:27,055 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 21:04:27] "[32mGET /login HTTP/1.1[0m" 302 -
+2026-05-25 21:04:27,067 - flask-limiter - INFO - ratelimit 3 per 1 minute (192.168.1.6) exceeded at endpoint: login
+2026-05-25 21:04:27,068 - __main__ - WARNING - Rate limit excedido desde 192.168.1.6. Espera: Nones
+2026-05-25 21:04:27,071 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 21:04:27] "[32mGET /login HTTP/1.1[0m" 302 -
+2026-05-25 21:04:27,086 - flask-limiter - INFO - ratelimit 3 per 1 minute (192.168.1.6) exceeded at endpoint: login
+2026-05-25 21:04:27,089 - __main__ - WARNING - Rate limit excedido desde 192.168.1.6. Espera: Nones
+2026-05-25 21:04:27,094 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 21:04:27] "[32mGET /login HTTP/1.1[0m" 302 -
+2026-05-25 21:04:27,111 - flask-limiter - INFO - ratelimit 3 per 1 minute (192.168.1.6) exceeded at endpoint: login
+2026-05-25 21:04:27,112 - __main__ - WARNING - Rate limit excedido desde 192.168.1.6. Espera: Nones
+2026-05-25 21:04:27,113 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 21:04:27] "[32mGET /login HTTP/1.1[0m" 302 -
+2026-05-25 21:04:27,133 - flask-limiter - INFO - ratelimit 3 per 1 minute (192.168.1.6) exceeded at endpoint: login
+2026-05-25 21:04:27,134 - __main__ - WARNING - Rate limit excedido desde 192.168.1.6. Espera: Nones
+2026-05-25 21:04:27,136 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 21:04:27] "[32mGET /login HTTP/1.1[0m" 302 -
+2026-05-25 21:04:27,150 - flask-limiter - INFO - ratelimit 3 per 1 minute (192.168.1.6) exceeded at endpoint: login
+2026-05-25 21:04:27,161 - __main__ - WARNING - Rate limit excedido desde 192.168.1.6. Espera: Nones
+2026-05-25 21:04:27,166 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 21:04:27] "[32mGET /login HTTP/1.1[0m" 302 -
+2026-05-25 21:04:27,185 - flask-limiter - INFO - ratelimit 3 per 1 minute (192.168.1.6) exceeded at endpoint: login
+2026-05-25 21:04:27,187 - __main__ - WARNING - Rate limit excedido desde 192.168.1.6. Espera: Nones
+2026-05-25 21:04:27,189 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 21:04:27] "[32mGET /login HTTP/1.1[0m" 302 -
+2026-05-25 21:04:32,260 - flask-limiter - INFO - ratelimit 3 per 1 minute (192.168.1.6) exceeded at endpoint: login
+2026-05-25 21:04:32,262 - __main__ - WARNING - Rate limit excedido desde 192.168.1.6. Espera: Nones
+2026-05-25 21:04:32,263 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 21:04:32] "[32mGET /login HTTP/1.1[0m" 302 -
+2026-05-25 21:04:32,273 - flask-limiter - INFO - ratelimit 3 per 1 minute (192.168.1.6) exceeded at endpoint: login
+2026-05-25 21:04:32,274 - __main__ - WARNING - Rate limit excedido desde 192.168.1.6. Espera: Nones
+2026-05-25 21:04:32,275 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 21:04:32] "[32mGET /login HTTP/1.1[0m" 302 -
+2026-05-25 21:04:32,291 - flask-limiter - INFO - ratelimit 3 per 1 minute (192.168.1.6) exceeded at endpoint: login
+2026-05-25 21:04:32,293 - __main__ - WARNING - Rate limit excedido desde 192.168.1.6. Espera: Nones
+2026-05-25 21:04:32,296 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 21:04:32] "[32mGET /login HTTP/1.1[0m" 302 -
+2026-05-25 21:04:32,318 - flask-limiter - INFO - ratelimit 3 per 1 minute (192.168.1.6) exceeded at endpoint: login
+2026-05-25 21:04:32,324 - __main__ - WARNING - Rate limit excedido desde 192.168.1.6. Espera: Nones
+2026-05-25 21:04:32,328 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 21:04:32] "[32mGET /login HTTP/1.1[0m" 302 -
+2026-05-25 21:04:32,343 - flask-limiter - INFO - ratelimit 3 per 1 minute (192.168.1.6) exceeded at endpoint: login
+2026-05-25 21:04:32,345 - __main__ - WARNING - Rate limit excedido desde 192.168.1.6. Espera: Nones
+2026-05-25 21:04:32,349 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 21:04:32] "[32mGET /login HTTP/1.1[0m" 302 -
+2026-05-25 21:04:32,366 - flask-limiter - INFO - ratelimit 3 per 1 minute (192.168.1.6) exceeded at endpoint: login
+2026-05-25 21:04:32,367 - __main__ - WARNING - Rate limit excedido desde 192.168.1.6. Espera: Nones
+2026-05-25 21:04:32,368 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 21:04:32] "[32mGET /login HTTP/1.1[0m" 302 -
+2026-05-25 21:04:32,387 - flask-limiter - INFO - ratelimit 3 per 1 minute (192.168.1.6) exceeded at endpoint: login
+2026-05-25 21:04:32,389 - __main__ - WARNING - Rate limit excedido desde 192.168.1.6. Espera: Nones
+2026-05-25 21:04:32,391 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 21:04:32] "[32mGET /login HTTP/1.1[0m" 302 -
+2026-05-25 21:04:32,404 - flask-limiter - INFO - ratelimit 3 per 1 minute (192.168.1.6) exceeded at endpoint: login
+2026-05-25 21:04:32,405 - __main__ - WARNING - Rate limit excedido desde 192.168.1.6. Espera: Nones
+2026-05-25 21:04:32,408 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 21:04:32] "[32mGET /login HTTP/1.1[0m" 302 -
+2026-05-25 21:04:32,429 - flask-limiter - INFO - ratelimit 3 per 1 minute (192.168.1.6) exceeded at endpoint: login
+2026-05-25 21:04:32,430 - __main__ - WARNING - Rate limit excedido desde 192.168.1.6. Espera: Nones
+2026-05-25 21:04:32,431 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 21:04:32] "[32mGET /login HTTP/1.1[0m" 302 -
+2026-05-25 21:04:32,451 - flask-limiter - INFO - ratelimit 3 per 1 minute (192.168.1.6) exceeded at endpoint: login
+2026-05-25 21:04:32,455 - __main__ - WARNING - Rate limit excedido desde 192.168.1.6. Espera: Nones
+2026-05-25 21:04:32,457 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 21:04:32] "[32mGET /login HTTP/1.1[0m" 302 -
+2026-05-25 21:04:32,469 - flask-limiter - INFO - ratelimit 3 per 1 minute (192.168.1.6) exceeded at endpoint: login
+2026-05-25 21:04:32,470 - __main__ - WARNING - Rate limit excedido desde 192.168.1.6. Espera: Nones
+2026-05-25 21:04:32,471 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 21:04:32] "[32mGET /login HTTP/1.1[0m" 302 -
+2026-05-25 21:04:32,492 - flask-limiter - INFO - ratelimit 3 per 1 minute (192.168.1.6) exceeded at endpoint: login
+2026-05-25 21:04:32,493 - __main__ - WARNING - Rate limit excedido desde 192.168.1.6. Espera: Nones
+2026-05-25 21:04:32,494 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 21:04:32] "[32mGET /login HTTP/1.1[0m" 302 -
+2026-05-25 21:04:32,504 - flask-limiter - INFO - ratelimit 3 per 1 minute (192.168.1.6) exceeded at endpoint: login
+2026-05-25 21:04:32,506 - __main__ - WARNING - Rate limit excedido desde 192.168.1.6. Espera: Nones
+2026-05-25 21:04:32,509 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 21:04:32] "[32mGET /login HTTP/1.1[0m" 302 -
+2026-05-25 21:04:32,528 - flask-limiter - INFO - ratelimit 3 per 1 minute (192.168.1.6) exceeded at endpoint: login
+2026-05-25 21:04:32,529 - __main__ - WARNING - Rate limit excedido desde 192.168.1.6. Espera: Nones
+2026-05-25 21:04:32,530 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 21:04:32] "[32mGET /login HTTP/1.1[0m" 302 -
+2026-05-25 21:04:32,543 - flask-limiter - INFO - ratelimit 3 per 1 minute (192.168.1.6) exceeded at endpoint: login
+2026-05-25 21:04:32,544 - __main__ - WARNING - Rate limit excedido desde 192.168.1.6. Espera: Nones
+2026-05-25 21:04:32,545 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 21:04:32] "[32mGET /login HTTP/1.1[0m" 302 -
+2026-05-25 21:04:32,559 - flask-limiter - INFO - ratelimit 3 per 1 minute (192.168.1.6) exceeded at endpoint: login
+2026-05-25 21:04:32,560 - __main__ - WARNING - Rate limit excedido desde 192.168.1.6. Espera: Nones
+2026-05-25 21:04:32,561 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 21:04:32] "[32mGET /login HTTP/1.1[0m" 302 -
+2026-05-25 21:04:32,571 - flask-limiter - INFO - ratelimit 3 per 1 minute (192.168.1.6) exceeded at endpoint: login
+2026-05-25 21:04:32,572 - __main__ - WARNING - Rate limit excedido desde 192.168.1.6. Espera: Nones
+2026-05-25 21:04:32,575 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 21:04:32] "[32mGET /login HTTP/1.1[0m" 302 -
+2026-05-25 21:04:32,594 - flask-limiter - INFO - ratelimit 3 per 1 minute (192.168.1.6) exceeded at endpoint: login
+2026-05-25 21:04:32,594 - __main__ - WARNING - Rate limit excedido desde 192.168.1.6. Espera: Nones
+2026-05-25 21:04:32,595 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 21:04:32] "[32mGET /login HTTP/1.1[0m" 302 -
+2026-05-25 21:04:32,605 - flask-limiter - INFO - ratelimit 3 per 1 minute (192.168.1.6) exceeded at endpoint: login
+2026-05-25 21:04:32,607 - __main__ - WARNING - Rate limit excedido desde 192.168.1.6. Espera: Nones
+2026-05-25 21:04:32,609 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 21:04:32] "[32mGET /login HTTP/1.1[0m" 302 -
+2026-05-25 21:04:32,626 - flask-limiter - INFO - ratelimit 3 per 1 minute (192.168.1.6) exceeded at endpoint: login
+2026-05-25 21:04:32,627 - __main__ - WARNING - Rate limit excedido desde 192.168.1.6. Espera: Nones
+2026-05-25 21:04:32,628 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 21:04:32] "[32mGET /login HTTP/1.1[0m" 302 -
+2026-05-25 21:08:30,449 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.1.6:5000
+2026-05-25 21:08:30,449 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2026-05-25 21:08:33,080 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 21:08:33] "[32mGET / HTTP/1.1[0m" 302 -
+2026-05-25 21:08:33,212 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 21:08:33] "GET /login HTTP/1.1" 200 -
+2026-05-25 21:08:33,483 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 21:08:33] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2026-05-25 21:08:33,516 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 21:08:33] "[36mGET /static/logoemi.png HTTP/1.1[0m" 304 -
+2026-05-25 21:08:38,434 - __main__ - WARNING - Intento de login fallido: sas desde 192.168.1.6
+2026-05-25 21:08:38,440 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 21:08:38] "POST /login HTTP/1.1" 200 -
+2026-05-25 21:08:38,484 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 21:08:38] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2026-05-25 21:08:38,492 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 21:08:38] "[36mGET /static/logoemi.png HTTP/1.1[0m" 304 -
+2026-05-25 21:08:41,781 - __main__ - WARNING - Intento de login fallido: sasa desde 192.168.1.6
+2026-05-25 21:08:41,783 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 21:08:41] "POST /login HTTP/1.1" 200 -
+2026-05-25 21:08:41,820 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 21:08:41] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2026-05-25 21:08:41,823 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 21:08:41] "[36mGET /static/logoemi.png HTTP/1.1[0m" 304 -
+2026-05-25 21:08:44,929 - flask-limiter - INFO - ratelimit 3 per 1 minute (192.168.1.6) exceeded at endpoint: login
+2026-05-25 21:08:44,930 - __main__ - WARNING - Rate limit excedido desde 192.168.1.6. Espera: Nones
+2026-05-25 21:08:44,931 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 21:08:44] "[31m[1mPOST /login HTTP/1.1[0m" 429 -
+2026-05-25 21:08:44,956 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 21:08:44] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2026-05-25 21:08:44,960 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 21:08:44] "[36mGET /static/logoemi.png HTTP/1.1[0m" 304 -
+2026-05-25 21:08:48,383 - flask-limiter - INFO - ratelimit 3 per 1 minute (192.168.1.6) exceeded at endpoint: login
+2026-05-25 21:08:48,384 - __main__ - WARNING - Rate limit excedido desde 192.168.1.6. Espera: Nones
+2026-05-25 21:08:48,387 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 21:08:48] "[31m[1mPOST /login HTTP/1.1[0m" 429 -
+2026-05-25 21:08:48,419 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 21:08:48] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2026-05-25 21:08:48,422 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 21:08:48] "[36mGET /static/logoemi.png HTTP/1.1[0m" 304 -
+2026-05-25 21:08:52,892 - flask-limiter - INFO - ratelimit 3 per 1 minute (192.168.1.6) exceeded at endpoint: login
+2026-05-25 21:08:52,893 - __main__ - WARNING - Rate limit excedido desde 192.168.1.6. Espera: Nones
+2026-05-25 21:08:52,894 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 21:08:52] "[31m[1mPOST /login HTTP/1.1[0m" 429 -
+2026-05-25 21:08:52,935 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 21:08:52] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2026-05-25 21:08:52,937 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 21:08:52] "[36mGET /static/logoemi.png HTTP/1.1[0m" 304 -
+2026-05-25 21:09:01,570 - flask-limiter - INFO - ratelimit 3 per 1 minute (192.168.1.6) exceeded at endpoint: login
+2026-05-25 21:09:01,570 - __main__ - WARNING - Rate limit excedido desde 192.168.1.6. Espera: Nones
+2026-05-25 21:09:01,572 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 21:09:01] "[31m[1mPOST /login HTTP/1.1[0m" 429 -
+2026-05-25 21:09:01,605 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 21:09:01] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2026-05-25 21:09:01,614 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 21:09:01] "[36mGET /static/logoemi.png HTTP/1.1[0m" 304 -
+2026-05-25 21:15:15,322 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.1.6:5000
+2026-05-25 21:15:15,323 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2026-05-25 21:15:18,647 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 21:15:18] "[32mGET / HTTP/1.1[0m" 302 -
+2026-05-25 21:15:18,775 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 21:15:18] "GET /login HTTP/1.1" 200 -
+2026-05-25 21:15:18,947 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 21:15:18] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2026-05-25 21:15:18,950 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 21:15:18] "[36mGET /static/logoemi.png HTTP/1.1[0m" 304 -
+2026-05-25 21:15:24,093 - __main__ - WARNING - Intento de login fallido #1: WEWE desde 192.168.1.6
+2026-05-25 21:15:24,099 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 21:15:24] "POST /login HTTP/1.1" 200 -
+2026-05-25 21:15:24,140 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 21:15:24] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2026-05-25 21:15:24,149 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 21:15:24] "[36mGET /static/logoemi.png HTTP/1.1[0m" 304 -
+2026-05-25 21:15:27,534 - __main__ - WARNING - Intento de login fallido #2: EWEW desde 192.168.1.6
+2026-05-25 21:15:27,537 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 21:15:27] "POST /login HTTP/1.1" 200 -
+2026-05-25 21:15:27,569 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 21:15:27] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2026-05-25 21:15:27,571 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 21:15:27] "[36mGET /static/logoemi.png HTTP/1.1[0m" 304 -
+2026-05-25 21:15:30,543 - __main__ - WARNING - Intento de login fallido #3: EWE desde 192.168.1.6
+2026-05-25 21:15:30,543 - __main__ - WARNING - Usuario bloqueado por 60 segundos: 192.168.1.6
+2026-05-25 21:15:30,548 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 21:15:30] "POST /login HTTP/1.1" 200 -
+2026-05-25 21:15:30,581 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 21:15:30] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2026-05-25 21:15:30,588 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 21:15:30] "[36mGET /static/logoemi.png HTTP/1.1[0m" 304 -
+2026-05-25 21:16:05,697 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 21:16:05] "POST /login HTTP/1.1" 200 -
+2026-05-25 21:16:05,725 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 21:16:05] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2026-05-25 21:16:05,729 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 21:16:05] "[36mGET /static/logoemi.png HTTP/1.1[0m" 304 -
+2026-05-25 21:16:10,179 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 21:16:10] "POST /login HTTP/1.1" 200 -
+2026-05-25 21:16:10,209 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 21:16:10] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2026-05-25 21:16:10,212 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 21:16:10] "[36mGET /static/logoemi.png HTTP/1.1[0m" 304 -
+2026-05-25 21:16:13,116 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 21:16:13] "POST /login HTTP/1.1" 200 -
+2026-05-25 21:16:13,157 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 21:16:13] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2026-05-25 21:16:13,164 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 21:16:13] "[36mGET /static/logoemi.png HTTP/1.1[0m" 304 -
+2026-05-25 21:16:44,429 - __main__ - INFO - Login exitoso: USU (rol: estudiante)
+2026-05-25 21:16:44,433 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 21:16:44] "[32mPOST /login HTTP/1.1[0m" 302 -
+2026-05-25 21:16:44,465 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 21:16:44] "GET /panel HTTP/1.1" 200 -
+2026-05-25 21:16:44,506 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 21:16:44] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2026-05-25 21:16:45,960 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 21:16:45] "GET /examenes_estudiante HTTP/1.1" 200 -
+2026-05-25 21:16:45,978 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 21:16:45] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2026-05-25 21:16:52,027 - __main__ - WARNING - Intento de login fallido #1: EWE desde 192.168.1.6
+2026-05-25 21:16:52,031 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 21:16:52] "POST /login HTTP/1.1" 200 -
+2026-05-25 21:16:52,051 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 21:16:52] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2026-05-25 21:16:52,053 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 21:16:52] "[36mGET /static/logoemi.png HTTP/1.1[0m" 304 -
+2026-05-25 21:16:57,114 - __main__ - INFO - Login exitoso: ADRI (rol: estudiante)
+2026-05-25 21:16:57,116 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 21:16:57] "[32mPOST /login HTTP/1.1[0m" 302 -
+2026-05-25 21:16:57,131 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 21:16:57] "GET /panel HTTP/1.1" 200 -
+2026-05-25 21:16:57,157 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 21:16:57] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2026-05-25 21:16:59,374 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 21:16:59] "GET /examenes_estudiante HTTP/1.1" 200 -
+2026-05-25 21:16:59,398 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 21:16:59] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2026-05-25 21:17:01,462 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 21:17:01] "GET /panel HTTP/1.1" 200 -
+2026-05-25 21:17:01,493 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 21:17:01] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2026-05-25 21:17:03,976 - __main__ - INFO - Logout: ADRI
+2026-05-25 21:17:03,977 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 21:17:03] "[32mGET /logout HTTP/1.1[0m" 302 -
+2026-05-25 21:17:03,999 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 21:17:03] "GET /login HTTP/1.1" 200 -
+2026-05-25 21:17:04,040 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 21:17:04] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2026-05-25 21:17:04,042 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 21:17:04] "[36mGET /static/logoemi.png HTTP/1.1[0m" 304 -
+2026-05-25 21:17:08,802 - __main__ - INFO - Login exitoso: MARI (rol: docente)
+2026-05-25 21:17:08,804 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 21:17:08] "[32mPOST /login HTTP/1.1[0m" 302 -
+2026-05-25 21:17:08,834 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 21:17:08] "GET /panel HTTP/1.1" 200 -
+2026-05-25 21:17:08,874 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 21:17:08] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2026-05-25 21:17:10,365 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 21:17:10] "GET /examenes_docente HTTP/1.1" 200 -
+2026-05-25 21:17:10,387 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 21:17:10] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2026-05-25 21:24:46,467 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.1.6:5000
+2026-05-25 21:24:46,467 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2026-05-25 21:24:51,912 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 21:24:51] "[32mGET / HTTP/1.1[0m" 302 -
+2026-05-25 21:24:52,086 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 21:24:52] "GET /login HTTP/1.1" 200 -
+2026-05-25 21:24:52,195 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 21:24:52] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2026-05-25 21:24:52,285 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 21:24:52] "[36mGET /static/logoemi.png HTTP/1.1[0m" 304 -
+2026-05-25 21:24:57,175 - __main__ - INFO - Login exitoso: MARI (rol: docente)
+2026-05-25 21:24:57,177 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 21:24:57] "[32mPOST /login HTTP/1.1[0m" 302 -
+2026-05-25 21:24:57,197 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 21:24:57] "GET /panel HTTP/1.1" 200 -
+2026-05-25 21:24:57,239 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 21:24:57] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2026-05-25 21:24:58,834 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 21:24:58] "GET /examenes_docente HTTP/1.1" 200 -
+2026-05-25 21:24:58,846 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 21:24:58] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2026-05-25 21:25:33,937 - __main__ - INFO - Examen creado: 'HISTORIA' por docente MARI
+2026-05-25 21:25:33,939 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 21:25:33] "[32mPOST /crear_examen HTTP/1.1[0m" 302 -
+2026-05-25 21:25:33,947 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 21:25:33] "GET /examenes_docente HTTP/1.1" 200 -
+2026-05-25 21:25:33,966 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 21:25:33] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2026-05-25 21:25:40,381 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 21:25:40] "GET /configurar_preguntas?id_examen=5 HTTP/1.1" 200 -
+2026-05-25 21:25:40,391 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 21:25:40] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2026-05-25 21:27:31,075 - __main__ - INFO - Preguntas guardadas para examen ID 5
+2026-05-25 21:27:31,077 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 21:27:31] "[32mPOST /guardar_preguntas HTTP/1.1[0m" 302 -
+2026-05-25 21:27:31,097 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 21:27:31] "GET /examenes_docente HTTP/1.1" 200 -
+2026-05-25 21:27:31,113 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 21:27:31] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2026-05-25 21:27:34,525 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 21:27:34] "GET /ver_preguntas?id_examen=5 HTTP/1.1" 200 -
+2026-05-25 21:27:34,537 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 21:27:34] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2026-05-25 21:27:47,400 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 21:27:47] "GET /examenes_docente HTTP/1.1" 200 -
+2026-05-25 21:27:47,424 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 21:27:47] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2026-05-25 21:30:15,360 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.1.6:5000
+2026-05-25 21:30:15,360 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2026-05-25 21:30:21,302 - werkzeug - INFO - 192.168.1.9 - - [25/May/2026 21:30:21] "[32mGET / HTTP/1.1[0m" 302 -
+2026-05-25 21:30:21,327 - werkzeug - INFO - 192.168.1.9 - - [25/May/2026 21:30:21] "GET /login HTTP/1.1" 200 -
+2026-05-25 21:30:21,414 - werkzeug - INFO - 192.168.1.9 - - [25/May/2026 21:30:21] "GET /static/css/styles.css HTTP/1.1" 200 -
+2026-05-25 21:30:21,417 - werkzeug - INFO - 192.168.1.9 - - [25/May/2026 21:30:21] "GET /static/logoemi.png HTTP/1.1" 200 -
+2026-05-25 21:30:34,163 - __main__ - INFO - Login exitoso: USU (rol: estudiante)
+2026-05-25 21:30:34,164 - werkzeug - INFO - 192.168.1.9 - - [25/May/2026 21:30:34] "[32mPOST /login HTTP/1.1[0m" 302 -
+2026-05-25 21:30:34,196 - werkzeug - INFO - 192.168.1.9 - - [25/May/2026 21:30:34] "GET /panel HTTP/1.1" 200 -
+2026-05-25 21:30:34,612 - werkzeug - INFO - 192.168.1.9 - - [25/May/2026 21:30:34] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2026-05-25 21:30:35,143 - werkzeug - INFO - 192.168.1.9 - - [25/May/2026 21:30:35] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2026-05-25 21:30:51,495 - werkzeug - INFO - 192.168.1.9 - - [25/May/2026 21:30:51] "GET /examenes_estudiante HTTP/1.1" 200 -
+2026-05-25 21:30:51,515 - werkzeug - INFO - 192.168.1.9 - - [25/May/2026 21:30:51] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2026-05-25 21:30:53,471 - werkzeug - INFO - 192.168.1.9 - - [25/May/2026 21:30:53] "GET /resolver_examen?id_examen=5 HTTP/1.1" 200 -
+2026-05-25 21:30:53,496 - werkzeug - INFO - 192.168.1.9 - - [25/May/2026 21:30:53] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2026-05-25 21:30:57,864 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 21:30:57] "GET /ver_preguntas?id_examen=5 HTTP/1.1" 200 -
+2026-05-25 21:30:57,878 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 21:30:57] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2026-05-25 21:31:40,497 - __main__ - INFO - Examen resuelto: ID 5 por estudiante USU - Puntaje: 100.00%
+2026-05-25 21:31:40,566 - werkzeug - INFO - 192.168.1.9 - - [25/May/2026 21:31:40] "POST /resolver_examen HTTP/1.1" 200 -
+2026-05-25 21:31:40,602 - flask_wtf.csrf - INFO - The CSRF token is missing.
+2026-05-25 21:31:40,604 - werkzeug - INFO - 192.168.1.9 - - [25/May/2026 21:31:40] "[31m[1mPOST /reportar_sospecha HTTP/1.1[0m" 400 -
+2026-05-25 21:31:40,647 - werkzeug - INFO - 192.168.1.9 - - [25/May/2026 21:31:40] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2026-05-25 21:31:40,701 - __main__ - WARNING - Sospecha reportada: Cambio de pestaña - Examen 5 - Estudiante USU - Contador: 1
+2026-05-25 21:31:40,702 - __main__ - WARNING - Sospecha reportada: Múltiples ventanas - Examen 5 - Estudiante USU - Contador: 1
+2026-05-25 21:31:40,705 - werkzeug - INFO - 192.168.1.9 - - [25/May/2026 21:31:40] "POST /reportar_sospecha HTTP/1.1" 200 -
+2026-05-25 21:31:40,706 - werkzeug - INFO - 192.168.1.9 - - [25/May/2026 21:31:40] "POST /reportar_sospecha HTTP/1.1" 200 -
+2026-05-25 21:31:46,072 - werkzeug - INFO - 192.168.1.9 - - [25/May/2026 21:31:46] "GET /panel HTTP/1.1" 200 -
+2026-05-25 21:31:46,106 - werkzeug - INFO - 192.168.1.9 - - [25/May/2026 21:31:46] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2026-05-25 21:31:47,827 - werkzeug - INFO - 192.168.1.9 - - [25/May/2026 21:31:47] "GET /examenes_estudiante HTTP/1.1" 200 -
+2026-05-25 21:31:47,868 - werkzeug - INFO - 192.168.1.9 - - [25/May/2026 21:31:47] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2026-05-25 21:31:49,767 - werkzeug - INFO - 192.168.1.9 - - [25/May/2026 21:31:49] "[32mGET /resolver_examen?id_examen=5 HTTP/1.1[0m" 302 -
+2026-05-25 21:31:49,842 - werkzeug - INFO - 192.168.1.9 - - [25/May/2026 21:31:49] "GET /resultados_estudiante HTTP/1.1" 200 -
+2026-05-25 21:31:49,874 - werkzeug - INFO - 192.168.1.9 - - [25/May/2026 21:31:49] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2026-05-25 21:31:53,419 - werkzeug - INFO - 192.168.1.9 - - [25/May/2026 21:31:53] "GET /panel HTTP/1.1" 200 -
+2026-05-25 21:31:53,478 - werkzeug - INFO - 192.168.1.9 - - [25/May/2026 21:31:53] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2026-05-25 21:31:55,703 - werkzeug - INFO - 192.168.1.9 - - [25/May/2026 21:31:55] "GET /examenes_estudiante HTTP/1.1" 200 -
+2026-05-25 21:31:55,765 - werkzeug - INFO - 192.168.1.9 - - [25/May/2026 21:31:55] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2026-05-25 21:31:58,030 - werkzeug - INFO - 192.168.1.9 - - [25/May/2026 21:31:58] "[32mGET /resolver_examen?id_examen=5 HTTP/1.1[0m" 302 -
+2026-05-25 21:31:58,053 - werkzeug - INFO - 192.168.1.9 - - [25/May/2026 21:31:58] "GET /resultados_estudiante HTTP/1.1" 200 -
+2026-05-25 21:31:58,085 - werkzeug - INFO - 192.168.1.9 - - [25/May/2026 21:31:58] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2026-05-25 21:32:01,142 - werkzeug - INFO - 192.168.1.9 - - [25/May/2026 21:32:01] "GET /panel HTTP/1.1" 200 -
+2026-05-25 21:32:01,171 - werkzeug - INFO - 192.168.1.9 - - [25/May/2026 21:32:01] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2026-05-25 21:32:09,755 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 21:32:09] "GET /examenes_docente HTTP/1.1" 200 -
+2026-05-25 21:32:09,769 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 21:32:09] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2026-05-25 21:32:14,630 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 21:32:14] "GET /configurar_preguntas?id_examen=4 HTTP/1.1" 200 -
+2026-05-25 21:32:14,643 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 21:32:14] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2026-05-25 21:32:49,395 - __main__ - INFO - Examen creado: 'HISTORIA2' por docente MARI
+2026-05-25 21:32:49,396 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 21:32:49] "[32mPOST /crear_examen HTTP/1.1[0m" 302 -
+2026-05-25 21:32:49,405 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 21:32:49] "GET /examenes_docente HTTP/1.1" 200 -
+2026-05-25 21:32:49,429 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 21:32:49] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2026-05-25 21:32:53,263 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 21:32:53] "GET /configurar_preguntas?id_examen=6 HTTP/1.1" 200 -
+2026-05-25 21:32:53,282 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 21:32:53] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2026-05-25 21:33:15,932 - __main__ - INFO - Preguntas guardadas para examen ID 6
+2026-05-25 21:33:15,934 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 21:33:15] "[32mPOST /guardar_preguntas HTTP/1.1[0m" 302 -
+2026-05-25 21:33:15,945 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 21:33:15] "GET /examenes_docente HTTP/1.1" 200 -
+2026-05-25 21:33:15,966 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 21:33:15] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2026-05-25 21:33:18,757 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 21:33:18] "GET /ver_preguntas?id_examen=6 HTTP/1.1" 200 -
+2026-05-25 21:33:18,778 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 21:33:18] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2026-05-25 21:33:21,005 - werkzeug - INFO - 192.168.1.9 - - [25/May/2026 21:33:21] "GET /examenes_estudiante HTTP/1.1" 200 -
+2026-05-25 21:33:21,032 - werkzeug - INFO - 192.168.1.9 - - [25/May/2026 21:33:21] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2026-05-25 21:33:23,523 - werkzeug - INFO - 192.168.1.9 - - [25/May/2026 21:33:23] "GET /resolver_examen?id_examen=6 HTTP/1.1" 200 -
+2026-05-25 21:33:23,544 - werkzeug - INFO - 192.168.1.9 - - [25/May/2026 21:33:23] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2026-05-25 21:33:27,318 - __main__ - WARNING - Sospecha reportada: Cambio de pestaña - Examen 6 - Estudiante USU - Contador: 1
+2026-05-25 21:33:27,319 - werkzeug - INFO - 192.168.1.9 - - [25/May/2026 21:33:27] "POST /reportar_sospecha HTTP/1.1" 200 -
+2026-05-25 21:33:27,323 - __main__ - WARNING - Sospecha reportada: Múltiples ventanas - Examen 6 - Estudiante USU - Contador: 1
+2026-05-25 21:33:27,325 - werkzeug - INFO - 192.168.1.9 - - [25/May/2026 21:33:27] "POST /reportar_sospecha HTTP/1.1" 200 -
+2026-05-25 21:33:32,389 - __main__ - WARNING - Sospecha reportada: Cambio de pestaña - Examen 6 - Estudiante USU - Contador: 2
+2026-05-25 21:33:32,391 - werkzeug - INFO - 192.168.1.9 - - [25/May/2026 21:33:32] "POST /reportar_sospecha HTTP/1.1" 200 -
+2026-05-25 21:33:32,391 - __main__ - WARNING - Sospecha reportada: Múltiples ventanas - Examen 6 - Estudiante USU - Contador: 2
+2026-05-25 21:33:32,392 - werkzeug - INFO - 192.168.1.9 - - [25/May/2026 21:33:32] "POST /reportar_sospecha HTTP/1.1" 200 -
+2026-05-25 21:33:35,481 - __main__ - WARNING - Sospecha reportada: Múltiples ventanas - Examen 6 - Estudiante USU - Contador: 3
+2026-05-25 21:33:35,482 - werkzeug - INFO - 192.168.1.9 - - [25/May/2026 21:33:35] "POST /reportar_sospecha HTTP/1.1" 200 -
+2026-05-25 21:33:35,485 - __main__ - WARNING - Sospecha reportada: Cambio de pestaña - Examen 6 - Estudiante USU - Contador: 3
+2026-05-25 21:33:35,487 - werkzeug - INFO - 192.168.1.9 - - [25/May/2026 21:33:35] "POST /reportar_sospecha HTTP/1.1" 200 -
+2026-05-25 21:33:37,649 - __main__ - INFO - Examen resuelto: ID 6 por estudiante USU - Puntaje: 0.00%
+2026-05-25 21:33:37,650 - werkzeug - INFO - 192.168.1.9 - - [25/May/2026 21:33:37] "POST /resolver_examen HTTP/1.1" 200 -
+2026-05-25 21:33:37,668 - werkzeug - INFO - 192.168.1.9 - - [25/May/2026 21:33:37] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2026-05-25 21:33:58,668 - werkzeug - INFO - 192.168.1.9 - - [25/May/2026 21:33:58] "[32mGET /resolver_examen?id_examen=6 HTTP/1.1[0m" 302 -
+2026-05-25 21:33:58,722 - werkzeug - INFO - 192.168.1.9 - - [25/May/2026 21:33:58] "GET /resultados_estudiante HTTP/1.1" 200 -
+2026-05-25 21:33:58,746 - werkzeug - INFO - 192.168.1.9 - - [25/May/2026 21:33:58] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2026-05-25 21:34:03,860 - werkzeug - INFO - 192.168.1.9 - - [25/May/2026 21:34:03] "[32mGET /resolver_examen?id_examen=5 HTTP/1.1[0m" 302 -
+2026-05-25 21:34:03,882 - werkzeug - INFO - 192.168.1.9 - - [25/May/2026 21:34:03] "GET /resultados_estudiante HTTP/1.1" 200 -
+2026-05-25 21:34:03,935 - werkzeug - INFO - 192.168.1.9 - - [25/May/2026 21:34:03] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2026-05-25 21:34:15,415 - werkzeug - INFO - 192.168.1.9 - - [25/May/2026 21:34:15] "GET /resolver_examen?id_examen=4 HTTP/1.1" 200 -
+2026-05-25 21:34:15,439 - werkzeug - INFO - 192.168.1.9 - - [25/May/2026 21:34:15] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2026-05-25 21:34:19,322 - __main__ - WARNING - Sospecha reportada: Múltiples ventanas - Examen 4 - Estudiante USU - Contador: 1
+2026-05-25 21:34:19,323 - werkzeug - INFO - 192.168.1.9 - - [25/May/2026 21:34:19] "POST /reportar_sospecha HTTP/1.1" 200 -
+2026-05-25 21:34:19,328 - flask_wtf.csrf - INFO - The CSRF token is missing.
+2026-05-25 21:34:19,328 - werkzeug - INFO - 192.168.1.9 - - [25/May/2026 21:34:19] "[31m[1mPOST /reportar_sospecha HTTP/1.1[0m" 400 -
+2026-05-25 21:34:19,330 - __main__ - WARNING - Sospecha reportada: Cambio de pestaña - Examen 4 - Estudiante USU - Contador: 1
+2026-05-25 21:34:19,331 - werkzeug - INFO - 192.168.1.9 - - [25/May/2026 21:34:19] "POST /reportar_sospecha HTTP/1.1" 200 -

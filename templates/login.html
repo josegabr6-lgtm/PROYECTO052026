@@ -142,7 +142,15 @@
         box-shadow: 0 0 20px #00bfff;
     }
 
-    .toast {
+    .btn-login:disabled {
+        background: #555;
+        cursor: not-allowed;
+        transform: none;
+        box-shadow: none;
+    }
+
+    /* ===== TOAST ERROR (login fallido) ===== */
+    .toast-error {
         position: fixed;
         top: 30px;
         left: 50%;
@@ -165,11 +173,67 @@
         border: 1px solid rgba(255,255,255,0.1);
     }
 
-    .toast.show {
+    .toast-error.show {
         transform: translateX(-50%) translateY(0);
         opacity: 1;
     }
 
+    /* ===== TOAST BLOQUEO (rate limit) ===== */
+    .toast-bloqueo {
+        position: fixed;
+        top: 30px;
+        left: 50%;
+        transform: translateX(-50%) translateY(-120px);
+        background: linear-gradient(90deg, #ff6b35, #f7931e);
+        color: white;
+        padding: 20px 40px;
+        border-radius: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+        font-size: 16px;
+        font-weight: 600;
+        box-shadow: 0 10px 40px rgba(255, 107, 53, 0.5);
+        opacity: 0;
+        transition: all 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        z-index: 9999;
+        min-width: 400px;
+        justify-content: center;
+        border: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .toast-bloqueo.show {
+        transform: translateX(-50%) translateY(0);
+        opacity: 1;
+    }
+
+    .toast-bloqueo .icono {
+        font-size: 40px;
+        margin-bottom: 5px;
+    }
+
+    .toast-bloqueo .mensaje {
+        font-size: 18px;
+        text-align: center;
+    }
+
+    .toast-bloqueo .contador {
+        font-size: 36px;
+        font-weight: bold;
+        font-family: 'Courier New', monospace;
+        background: rgba(0,0,0,0.3);
+        padding: 10px 30px;
+        border-radius: 15px;
+        margin-top: 5px;
+    }
+
+    .toast-bloqueo .submensaje {
+        font-size: 14px;
+        opacity: 0.9;
+    }
+
+    /* Animación shake para el formulario */
     @keyframes shake {
         0%, 100% { transform: translateX(0); }
         10%, 30%, 50%, 70%, 90% { transform: translateX(-6px); }
@@ -178,6 +242,23 @@
 
     .shake {
         animation: shake 0.5s ease-in-out;
+    }
+
+    /* Overlay de bloqueo */
+    .overlay-bloqueo {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0,0,0,0.7);
+        z-index: 9998;
+        display: none;
+        backdrop-filter: blur(5px);
+    }
+
+    .overlay-bloqueo.show {
+        display: block;
     }
 
     @media(max-width:1000px) {
@@ -200,10 +281,22 @@
 {% endblock %}
 
 {% block content %}
-<div class="toast" id="toast">
+<!-- Toast de error (login fallido) -->
+<div class="toast-error" id="toastError">
     <i class="fas fa-exclamation-circle"></i>
-    <span id="toastMessage">{{ error }}</span>
+    <span id="toastErrorMessage">{{ error }}</span>
 </div>
+
+<!-- Toast de bloqueo (rate limit) -->
+<div class="toast-bloqueo" id="toastBloqueo">
+    <i class="fas fa-lock icono"></i>
+    <div class="mensaje">Demasiados intentos fallidos</div>
+    <div class="contador" id="contadorBloqueo">60</div>
+    <div class="submensaje">Espera antes de intentar de nuevo</div>
+</div>
+
+<!-- Overlay de bloqueo -->
+<div class="overlay-bloqueo" id="overlayBloqueo"></div>
 
 <div id="login-page">
     <div class="container-login">
@@ -228,7 +321,7 @@
                     <i class="fas fa-lock"></i>
                     <input type="password" name="password" id="password" placeholder="Contraseña" required autocomplete="current-password">
                 </div>
-                <button type="submit" class="btn-login">
+                <button type="submit" class="btn-login" id="btnLogin">
                     <i class="fas fa-sign-in-alt"></i> INICIAR SESIÓN
                 </button>
             </form>
@@ -238,17 +331,83 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        const toast = document.getElementById('toast');
+        const toastError = document.getElementById('toastError');
+        const toastErrorMessage = document.getElementById('toastErrorMessage');
+        const toastBloqueo = document.getElementById('toastBloqueo');
+        const contadorBloqueo = document.getElementById('contadorBloqueo');
+        const overlayBloqueo = document.getElementById('overlayBloqueo');
         const loginForm = document.getElementById('loginForm');
-        const error = "{{ error }}";
+        const btnLogin = document.getElementById('btnLogin');
+        const usuarioInput = document.getElementById('usuario');
+        const passwordInput = document.getElementById('password');
 
+        // ===== 1. TOAST DE ERROR (login fallido) =====
+        const error = "{{ error|default('') }}";
         if (error && error.trim() !== '') {
-            toast.classList.add('show');
+            toastErrorMessage.textContent = error;
+            toastError.classList.add('show');
             loginForm.classList.add('shake');
-            setTimeout(() => loginForm.classList.remove('shake'), 500);
+            
             setTimeout(() => {
-                toast.classList.remove('show');
+                loginForm.classList.remove('shake');
+            }, 500);
+
+            setTimeout(() => {
+                toastError.classList.remove('show');
             }, 4000);
+        }
+
+        // ===== 2. TOAST DE BLOQUEO (rate limit) =====
+        const bloqueoRestante = {{ bloqueo_restante|default(0) }};
+        
+        if (bloqueoRestante > 0) {
+            mostrarBloqueo(bloqueoRestante);
+        }
+
+        function mostrarBloqueo(segundos) {
+            let tiempoRestante = segundos;
+            
+            // Mostrar toast y overlay
+            toastBloqueo.classList.add('show');
+            overlayBloqueo.classList.add('show');
+            
+            // Deshabilitar formulario
+            btnLogin.disabled = true;
+            usuarioInput.disabled = true;
+            passwordInput.disabled = true;
+            
+            // Actualizar contador
+            actualizarContador(tiempoRestante);
+            
+            const intervalo = setInterval(() => {
+                tiempoRestante--;
+                actualizarContador(tiempoRestante);
+                
+                if (tiempoRestante <= 0) {
+                    clearInterval(intervalo);
+                    ocultarBloqueo();
+                }
+            }, 1000);
+        }
+
+        function actualizarContador(segundos) {
+            const minutos = Math.floor(segundos / 60);
+            const segs = segundos % 60;
+            contadorBloqueo.textContent = 
+                `${minutos.toString().padStart(2, '0')}:${segs.toString().padStart(2, '0')}`;
+        }
+
+        function ocultarBloqueo() {
+            toastBloqueo.classList.remove('show');
+            overlayBloqueo.classList.remove('show');
+            
+            // Habilitar formulario
+            btnLogin.disabled = false;
+            usuarioInput.disabled = false;
+            passwordInput.disabled = false;
+            
+            // Enfocar usuario
+            usuarioInput.focus();
         }
     });
 </script>

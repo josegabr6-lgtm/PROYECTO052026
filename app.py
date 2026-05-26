@@ -178,15 +178,40 @@ def asegurar_tabla_reportes():
 def inicio():
     return redirect(url_for("login"))
 
-#_________________LOGIN____________________
+
+
+# _______________LOGIN________________
 
 @app.route("/login", methods=["GET", "POST"])
-@limiter.limit("3 per minute")
 @handle_db_errors
 def login():
+    # Inicializar contador de intentos fallidos en sesión
+    if "login_attempts" not in session:
+        session["login_attempts"] = 0
+        session["login_blocked_until"] = 0
+    
+    # Verificar si está bloqueado
+    ahora = datetime.datetime.now().timestamp()
+    bloqueado_hasta = session.get("login_blocked_until", 0)
+    tiempo_restante = int(bloqueado_hasta - ahora)
+    
+    if tiempo_restante > 0:
+        # Está bloqueado, mostrar login con contador
+        return render_template("login.html", bloqueo_restante=tiempo_restante)
+    
+    # Si ya pasó el bloqueo, resetear contador
+    if bloqueado_hasta > 0 and tiempo_restante <= 0:
+        session["login_attempts"] = 0
+        session["login_blocked_until"] = 0
+    
     if request.method == "POST":
         usuario = request.form.get("usuario", "").strip()
         password = request.form.get("password", "")
+        
+        # Verificar de nuevo si está bloqueado (por si acaso)
+        if session.get("login_blocked_until", 0) > ahora:
+            tiempo_restante = int(session["login_blocked_until"] - ahora)
+            return render_template("login.html", bloqueo_restante=tiempo_restante)
 
         if not usuario or not password:
             return render_template("login.html", error="Usuario y contraseña son obligatorios")
@@ -200,17 +225,30 @@ def login():
             fila = cursor.fetchone()
 
         if fila and bcrypt.checkpw(password.encode("utf-8"), fila[1].encode("utf-8")):
+            # Login exitoso: resetear contador
+            session["login_attempts"] = 0
+            session["login_blocked_until"] = 0
             session["usuario"] = usuario
             session["rol"] = fila[2]
             session["usuario_id"] = fila[0]
             logger.info(f"Login exitoso: {usuario} (rol: {fila[2]})")
             return redirect(url_for("panel"))
         else:
-            logger.warning(f"Intento de login fallido: {usuario} desde {request.remote_addr}")
-            return render_template("login.html", error="Usuario o contraseña incorrecta")
+            # Login fallido: incrementar contador
+            session["login_attempts"] = session.get("login_attempts", 0) + 1
+            intentos = session["login_attempts"]
+            
+            logger.warning(f"Intento de login fallido #{intentos}: {usuario} desde {request.remote_addr}")
+            
+            # Si llega a 3 intentos, bloquear por 60 segundos
+            if intentos >= 3:
+                session["login_blocked_until"] = ahora + 60
+                logger.warning(f"Usuario bloqueado por 60 segundos: {request.remote_addr}")
+                return render_template("login.html", bloqueo_restante=60)
+            
+            return render_template("login.html", error=f"Usuario o contraseña incorrecta (intento {intentos}/3)")
 
     return render_template("login.html")
-
 
 @app.route("/logout")
 def logout():
