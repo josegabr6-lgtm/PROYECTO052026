@@ -465,3 +465,63 @@
 2026-05-25 21:34:19,328 - werkzeug - INFO - 192.168.1.9 - - [25/May/2026 21:34:19] "[31m[1mPOST /reportar_sospecha HTTP/1.1[0m" 400 -
 2026-05-25 21:34:19,330 - __main__ - WARNING - Sospecha reportada: Cambio de pestaña - Examen 4 - Estudiante USU - Contador: 1
 2026-05-25 21:34:19,331 - werkzeug - INFO - 192.168.1.9 - - [25/May/2026 21:34:19] "POST /reportar_sospecha HTTP/1.1" 200 -
+2026-05-25 22:06:58,006 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.1.6:5000
+2026-05-25 22:06:58,007 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2026-05-25 22:07:00,827 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 22:07:00] "[32mGET / HTTP/1.1[0m" 302 -
+2026-05-25 22:07:00,952 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 22:07:00] "GET /login HTTP/1.1" 200 -
+2026-05-25 22:07:01,089 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 22:07:01] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2026-05-25 22:07:01,094 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 22:07:01] "[36mGET /static/logoemi.png HTTP/1.1[0m" 304 -
+2026-05-25 22:07:06,118 - __main__ - INFO - Login exitoso: MARI (rol: docente)
+2026-05-25 22:07:06,120 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 22:07:06] "[32mPOST /login HTTP/1.1[0m" 302 -
+2026-05-25 22:07:06,139 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 22:07:06] "GET /panel HTTP/1.1" 200 -
+2026-05-25 22:07:06,162 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 22:07:06] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2026-05-25 22:07:07,968 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 22:07:07] "GET /examenes_docente HTTP/1.1" 200 -
+2026-05-25 22:07:07,987 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 22:07:07] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2026-05-25 22:07:59,164 - __main__ - INFO - Examen creado: 'BASE DE DATOS' (30 min) por docente MARI
+2026-05-25 22:07:59,165 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 22:07:59] "[32mPOST /crear_examen HTTP/1.1[0m" 302 -
+2026-05-25 22:07:59,173 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 22:07:59] "GET /examenes_docente HTTP/1.1" 200 -
+2026-05-25 22:07:59,195 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 22:07:59] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2026-05-25 22:08:05,912 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 22:08:05] "GET /configurar_preguntas?id_examen=7 HTTP/1.1" 200 -
+2026-05-25 22:08:05,927 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 22:08:05] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2026-05-25 22:08:58,132 - __main__ - INFO - Preguntas guardadas para examen ID 7
+2026-05-25 22:08:58,133 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 22:08:58] "[32mPOST /guardar_preguntas HTTP/1.1[0m" 302 -
+2026-05-25 22:08:58,144 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 22:08:58] "GET /examenes_docente HTTP/1.1" 200 -
+2026-05-25 22:08:58,161 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 22:08:58] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2026-05-25 22:09:01,113 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 22:09:01] "GET /ver_preguntas?id_examen=7 HTTP/1.1" 200 -
+2026-05-25 22:09:01,128 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 22:09:01] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2026-05-25 22:09:06,435 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 22:09:06] "GET /examenes_docente HTTP/1.1" 200 -
+2026-05-25 22:09:06,459 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 22:09:06] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2026-05-25 22:09:15,859 - __main__ - INFO - Logout: MARI
+2026-05-25 22:09:15,860 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 22:09:15] "[32mGET /logout HTTP/1.1[0m" 302 -
+2026-05-25 22:09:15,871 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 22:09:15] "GET /login HTTP/1.1" 200 -
+2026-05-25 22:09:15,900 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 22:09:15] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2026-05-25 22:09:15,902 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 22:09:15] "[36mGET /static/logoemi.png HTTP/1.1[0m" 304 -
+2026-05-25 22:09:19,482 - __main__ - INFO - Login exitoso: USU (rol: estudiante)
+2026-05-25 22:09:19,483 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 22:09:19] "[32mPOST /login HTTP/1.1[0m" 302 -
+2026-05-25 22:09:19,499 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 22:09:19] "GET /panel HTTP/1.1" 200 -
+2026-05-25 22:09:19,518 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 22:09:19] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2026-05-25 22:09:21,243 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 22:09:21] "GET /examenes_estudiante HTTP/1.1" 200 -
+2026-05-25 22:09:21,257 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 22:09:21] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2026-05-25 22:09:23,623 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 22:09:23] "GET /resolver_examen?id_examen=7 HTTP/1.1" 200 -
+2026-05-25 22:09:23,637 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 22:09:23] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2026-05-25 22:09:51,050 - __main__ - INFO - Examen resuelto: ID 7 por estudiante USU - Puntaje: 0.00%
+2026-05-25 22:09:51,056 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 22:09:51] "POST /resolver_examen HTTP/1.1" 200 -
+2026-05-25 22:09:51,091 - flask_wtf.csrf - INFO - The CSRF token is missing.
+2026-05-25 22:09:51,096 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 22:09:51] "[31m[1mPOST /reportar_sospecha HTTP/1.1[0m" 400 -
+2026-05-25 22:09:51,101 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 22:09:51] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2026-05-25 22:09:51,227 - __main__ - WARNING - Sospecha reportada: Múltiples ventanas - Examen 7 - Estudiante USU - Contador: 1
+2026-05-25 22:09:51,231 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 22:09:51] "POST /reportar_sospecha HTTP/1.1" 200 -
+2026-05-25 22:09:51,234 - __main__ - WARNING - Sospecha reportada: Cambio de pestaña - Examen 7 - Estudiante USU - Contador: 1
+2026-05-25 22:09:51,239 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 22:09:51] "POST /reportar_sospecha HTTP/1.1" 200 -
+2026-05-25 22:09:56,562 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 22:09:56] "GET /panel HTTP/1.1" 200 -
+2026-05-25 22:09:56,581 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 22:09:56] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2026-05-25 22:09:58,030 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 22:09:58] "GET /examenes_estudiante HTTP/1.1" 200 -
+2026-05-25 22:09:58,050 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 22:09:58] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2026-05-25 22:09:59,147 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 22:09:59] "[32mGET /resolver_examen?id_examen=7 HTTP/1.1[0m" 302 -
+2026-05-25 22:09:59,192 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 22:09:59] "GET /resultados_estudiante HTTP/1.1" 200 -
+2026-05-25 22:09:59,210 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 22:09:59] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2026-05-25 22:10:01,150 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 22:10:01] "GET /panel HTTP/1.1" 200 -
+2026-05-25 22:10:01,174 - werkzeug - INFO - 192.168.1.6 - - [25/May/2026 22:10:01] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -

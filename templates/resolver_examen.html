@@ -115,31 +115,31 @@
 
 {% block scripts %}
 <script>
-    // ========== TEMPORIZADOR ==========
-    const TIEMPO_LIMITE = 60 * 60; // 60 minutos en segundos
-    let tiempoRestante = TIEMPO_LIMITE;
-    const timerElement = document.getElementById('timer');
+// ========== TEMPORIZADOR ==========
+const TIEMPO_LIMITE = {{ tiempo_limite }} * 60; // minutos a segundos    
+let tiempoRestante = TIEMPO_LIMITE;
+const timerElement = document.getElementById('timer');
 
-    function actualizarTimer() {
-        const minutos = Math.floor(tiempoRestante / 60);
-        const segundos = tiempoRestante % 60;
-        timerElement.textContent = `${minutos.toString().padStart(2, '0')}:${segundos.toString().padStart(2, '0')}`;
-        
-        if (tiempoRestante <= 300) { // 5 minutos
-            timerElement.classList.add('danger');
-        } else if (tiempoRestante <= 600) { // 10 minutos
-            timerElement.classList.add('warning');
-        }
-        
-        if (tiempoRestante <= 0) {
-            clearInterval(timerInterval);
-            document.getElementById('auto_submit').value = '1';
-            examForm.submit();
-        }
-        tiempoRestante--;
+function actualizarTimer() {
+    const minutos = Math.floor(tiempoRestante / 60);
+    const segundos = tiempoRestante % 60;
+    timerElement.textContent = `${minutos.toString().padStart(2, '0')}:${segundos.toString().padStart(2, '0')}`;
+    
+    if (tiempoRestante <= 300) { // 5 minutos
+        timerElement.classList.add('danger');
+    } else if (tiempoRestante <= 600) { // 10 minutos
+        timerElement.classList.add('warning');
     }
-    const timerInterval = setInterval(actualizarTimer, 1000);
-    actualizarTimer();
+    
+    if (tiempoRestante <= 0) {
+        clearInterval(timerInterval);
+        document.getElementById('auto_submit').value = '1';
+        examForm.submit();
+    }
+    tiempoRestante--;
+}
+const timerInterval = setInterval(actualizarTimer, 1000);
+actualizarTimer();
 
     // ========== SISTEMA ANTI-TRAMPA ==========
     const examForm = document.getElementById('examenForm');

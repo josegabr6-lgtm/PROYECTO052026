@@ -560,6 +560,7 @@ def examenes_docente():
 
     return render_template("examenes_docente.html", examenes=examenes_list)
 
+#______________CREAR EXAMEN________________
 
 @app.route("/crear_examen", methods=["POST"])
 @role_required("docente")
@@ -569,23 +570,29 @@ def crear_examen():
     descripcion = request.form.get("descripcion", "").strip()
     fecha = request.form.get("fecha")
     num_preguntas = request.form.get("num_preguntas", type=int)
+    tiempo_limite = request.form.get("tiempo_limite", type=int)
 
     if not all([titulo, descripcion, fecha]) or num_preguntas is None or num_preguntas < 1:
         flash("Todos los campos son obligatorios y la cantidad de preguntas debe ser al menos 1", "danger")
         return redirect(url_for("examenes_docente"))
+
+    # Validar tiempo límite (entre 5 min y 180 min)
+    if tiempo_limite is None or tiempo_limite < 5 or tiempo_limite > 180:
+        tiempo_limite = 60  # Default 60 minutos
 
     with get_db_connection() as conn:
         cursor = conn.cursor()
         cursor.execute("""
             INSERT INTO examenes (titulo, descripcion, tiempo_limite, fecha_creacion, creado_por, num_preguntas)
             VALUES (?, ?, ?, ?, ?, ?)
-        """, (titulo, descripcion, 60, fecha, session["usuario_id"], num_preguntas))
+        """, (titulo, descripcion, tiempo_limite, fecha, session["usuario_id"], num_preguntas))
         conn.commit()
 
-    logger.info(f"Examen creado: '{titulo}' por docente {session['usuario']}")
-    flash("Examen creado correctamente", "success")
+    logger.info(f"Examen creado: '{titulo}' ({tiempo_limite} min) por docente {session['usuario']}")
+    flash(f"Examen creado correctamente ({tiempo_limite} minutos)", "success")
     return redirect(url_for("examenes_docente"))
 
+#______________ELIMINAR EXAMEN_______________
 
 @app.route("/eliminar_examen", methods=["POST"])
 @role_required("docente")
@@ -744,6 +751,7 @@ def examenes_estudiante():
 
     return render_template("examenes_estudiante.html", examenes=examenes_list)
 
+#______________RESOLVER EXAMEN________________
 
 @app.route("/resolver_examen", methods=["GET", "POST"])
 @role_required("estudiante")
@@ -765,7 +773,7 @@ def resolver_examen():
             flash("Ya has resuelto este examen. No puedes repetirlo.", "warning")
             return redirect(url_for("resultados_estudiante"))
 
-        cursor.execute("SELECT titulo FROM examenes WHERE id_examen = ?", (id_examen,))
+        cursor.execute("SELECT titulo, tiempo_limite FROM examenes WHERE id_examen = ?", (id_examen,))
         examen = cursor.fetchone()
 
         cursor.execute("""
@@ -829,8 +837,11 @@ def resolver_examen():
             session["suspicious_counts"] = {}
         session["suspicious_counts"][str(id_examen)] = 0
 
-    return render_template("resolver_examen.html", titulo=examen[0], preguntas=preguntas_list, id_examen=id_examen)
-
+    return render_template("resolver_examen.html", 
+    titulo=examen[0], 
+    preguntas=preguntas_list, 
+    id_examen=id_examen,
+    tiempo_limite=examen[1] or 60)
 
 @app.route("/resultados_estudiante")
 @role_required("estudiante")
