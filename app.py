@@ -11,17 +11,39 @@ from flask import (
 from flask_wtf.csrf import CSRFProtect
 from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
+from flask_mail import Mail, Message
 import pyodbc
+
+import secrets
+from datetime import datetime, timedelta
+
+def generar_token_sesion():
+    return secrets.token_hex(32)
 
 # ───────────────────────────────────────────────
 # CARGAR VARIABLES DE ENTORNO
 # ───────────────────────────────────────────────
 load_dotenv()
 
+# ───────────────────────────────────────────────
+# CREAR APP FLASK
+# ───────────────────────────────────────────────
 app = Flask(__name__)
 app.secret_key = os.environ.get('SECRET_KEY')
 if not app.secret_key:
     raise ValueError("SECRET_KEY no está configurada en las variables de entorno")
+
+# ───────────────────────────────────────────────
+# CONFIGURAR EMAIL
+# ───────────────────────────────────────────────
+app.config['MAIL_SERVER'] = 'smtp.gmail.com'
+app.config['MAIL_PORT'] = 587
+app.config['MAIL_USE_TLS'] = True
+app.config['MAIL_USERNAME'] = os.environ.get('MAIL_USERNAME')
+app.config['MAIL_PASSWORD'] = os.environ.get('MAIL_PASSWORD')
+app.config['MAIL_DEFAULT_SENDER'] = os.environ.get('MAIL_USERNAME')
+
+mail = Mail(app)
 
 # ───────────────────────────────────────────────
 # CONFIGURACIÓN DE SEGURIDAD
@@ -114,7 +136,7 @@ def handle_db_errors(f):
 
 def role_required(*roles):
     """
-    Decorador para verificar roles permitidos.
+    Decorador para verificar roles permitidos y sesión única.
     """
     def decorator(f):
         @wraps(f)
@@ -122,12 +144,46 @@ def role_required(*roles):
             if "usuario" not in session:
                 flash("Debe iniciar sesión para acceder.", "warning")
                 return redirect(url_for("login"))
+            
+            # Verificar sesión única
+            if not verificar_sesion_unica():
+                session.clear()
+                flash("Tu sesión fue cerrada porque iniciaste sesión en otro dispositivo.", "warning")
+                return redirect(url_for("login", session_expirada="true"))
+            
             if session.get("rol") not in roles:
                 flash("No tiene permisos para acceder a esta sección.", "danger")
                 return redirect(url_for("panel"))
             return f(*args, **kwargs)
         return decorated
     return decorator
+
+
+def verificar_sesion_unica():
+    """
+    Verifica que el token de sesión en la cookie coincida con el de la BD.
+    Si no coincide, significa que alguien más se logueó con este usuario.
+    """
+    if "usuario_id" not in session or "session_token" not in session:
+        return True  # No hay sesión, no hay nada que verificar
+    
+    try:
+        with get_db_connection() as conn:
+            cursor = conn.cursor()
+            cursor.execute(
+                "SELECT session_token FROM usuarios WHERE id_usuario = ?",
+                (session["usuario_id"],)
+            )
+            fila = cursor.fetchone()
+            
+            if not fila or fila[0] != session["session_token"]:
+                # Sesión invalidada por otro login
+                return False
+    except:
+        pass
+    
+    return True
+
 
 
 def columna_existe(tabla, columna):
@@ -156,7 +212,7 @@ def asegurar_tabla_reportes():
                 )
                 CREATE TABLE reporte_sospecha (
                     id_reporte INT IDENTITY(1,1) PRIMARY KEY,
-                    id_usuario INT,
+n                    id_usuario INT,
                     id_examen INT,
                     tipo_evento NVARCHAR(100),
                     descripcion NVARCHAR(500),
@@ -179,9 +235,6 @@ def inicio():
     return redirect(url_for("login"))
 
 
-
-# _______________LOGIN________________
-
 @app.route("/login", methods=["GET", "POST"])
 @handle_db_errors
 def login():
@@ -191,12 +244,11 @@ def login():
         session["login_blocked_until"] = 0
     
     # Verificar si está bloqueado
-    ahora = datetime.datetime.now().timestamp()
+    ahora = datetime.now().timestamp()
     bloqueado_hasta = session.get("login_blocked_until", 0)
     tiempo_restante = int(bloqueado_hasta - ahora)
     
     if tiempo_restante > 0:
-        # Está bloqueado, mostrar login con contador
         return render_template("login.html", bloqueo_restante=tiempo_restante)
     
     # Si ya pasó el bloqueo, resetear contador
@@ -224,35 +276,63 @@ def login():
             )
             fila = cursor.fetchone()
 
-        if fila and bcrypt.checkpw(password.encode("utf-8"), fila[1].encode("utf-8")):
-            # Login exitoso: resetear contador
-            session["login_attempts"] = 0
-            session["login_blocked_until"] = 0
-            session["usuario"] = usuario
-            session["rol"] = fila[2]
-            session["usuario_id"] = fila[0]
-            logger.info(f"Login exitoso: {usuario} (rol: {fila[2]})")
-            return redirect(url_for("panel"))
-        else:
-            # Login fallido: incrementar contador
-            session["login_attempts"] = session.get("login_attempts", 0) + 1
-            intentos = session["login_attempts"]
+            if fila and bcrypt.checkpw(password.encode("utf-8"), fila[1].encode("utf-8")):
+                # ✅ LOGIN EXITOSO
+                session["login_attempts"] = 0
+                session["login_blocked_until"] = 0
+                
+                token_sesion = generar_token_sesion()
+                
+                with get_db_connection() as conn:
+                    cursor = conn.cursor()
+                    cursor.execute(
+                        "UPDATE usuarios SET session_token = ? WHERE id_usuario = ?",
+                        (token_sesion, fila[0])
+                    )
+                    conn.commit()
+                
+                session["usuario"] = usuario
+                session["rol"] = fila[2]
+                session["usuario_id"] = fila[0]
+                session["session_token"] = token_sesion
+                
+                logger.info(f"Login exitoso: {usuario}")
+                return redirect(url_for("panel"))
             
-            logger.warning(f"Intento de login fallido #{intentos}: {usuario} desde {request.remote_addr}")
-            
-            # Si llega a 3 intentos, bloquear por 60 segundos
-            if intentos >= 3:
-                session["login_blocked_until"] = ahora + 60
-                logger.warning(f"Usuario bloqueado por 60 segundos: {request.remote_addr}")
-                return render_template("login.html", bloqueo_restante=60)
-            
-            return render_template("login.html", error=f"Usuario o contraseña incorrecta (intento {intentos}/3)")
+            else:
+                # ❌ LOGIN FALLIDO
+                session["login_attempts"] = session.get("login_attempts", 0) + 1
+                intentos = session["login_attempts"]
+                
+                logger.warning(f"Intento fallido #{intentos}: {usuario}")
+                
+                if intentos >= 3:
+                    session["login_blocked_until"] = ahora + 60
+                    return render_template("login.html", bloqueo_restante=60)
+                
+                return render_template("login.html", error=f"Usuario o contraseña incorrecta (intento {intentos}/3)")
 
     return render_template("login.html")
+
 
 @app.route("/logout")
 def logout():
     usuario = session.get("usuario", "anónimo")
+    usuario_id = session.get("usuario_id")
+    
+    # Limpiar token en BD al cerrar sesión
+    if usuario_id:
+        try:
+            with get_db_connection() as conn:
+                cursor = conn.cursor()
+                cursor.execute(
+                    "UPDATE usuarios SET session_token = NULL WHERE id_usuario = ?",
+                    (usuario_id,)
+                )
+                conn.commit()
+        except:
+            pass
+    
     session.clear()
     logger.info(f"Logout: {usuario}")
     return redirect(url_for("login"))
@@ -265,7 +345,13 @@ def logout():
 def panel():
     if "usuario" not in session:
         return redirect(url_for("login"))
-
+    
+    # Verificar sesión única
+    if not verificar_sesion_unica():
+        session.clear()
+        flash("Tu sesión fue cerrada porque iniciaste sesión en otro dispositivo.", "warning")
+        return redirect(url_for("login", session_expirada="true"))
+    
     rol = session.get("rol")
     usuario = session.get("usuario")
 
@@ -560,7 +646,6 @@ def examenes_docente():
 
     return render_template("examenes_docente.html", examenes=examenes_list)
 
-#______________CREAR EXAMEN________________
 
 @app.route("/crear_examen", methods=["POST"])
 @role_required("docente")
@@ -592,7 +677,6 @@ def crear_examen():
     flash(f"Examen creado correctamente ({tiempo_limite} minutos)", "success")
     return redirect(url_for("examenes_docente"))
 
-#______________ELIMINAR EXAMEN_______________
 
 @app.route("/eliminar_examen", methods=["POST"])
 @role_required("docente")
@@ -751,7 +835,6 @@ def examenes_estudiante():
 
     return render_template("examenes_estudiante.html", examenes=examenes_list)
 
-#______________RESOLVER EXAMEN________________
 
 @app.route("/resolver_examen", methods=["GET", "POST"])
 @role_required("estudiante")
@@ -843,6 +926,7 @@ def resolver_examen():
     id_examen=id_examen,
     tiempo_limite=examen[1] or 60)
 
+
 @app.route("/resultados_estudiante")
 @role_required("estudiante")
 @handle_db_errors
@@ -908,7 +992,7 @@ def reportar_sospecha():
     if contador_sesion >= 3:
         return jsonify({"ok": True, "close_exam": True, "contador": 3})
 
-    now = int(datetime.datetime.utcnow().timestamp() * 1000)
+    now = int(datetime.utcnow().timestamp() * 1000)
     last_entries = exam_last.get(str(id_examen), [])
 
     duplicate = False
@@ -960,6 +1044,166 @@ def reportar_sospecha():
 
     logger.warning(f"Sospecha reportada: {tipo} - Examen {id_examen} - Estudiante {session['usuario']} - Contador: {contador_sesion}")
     return jsonify({"ok": True, "close_exam": close_exam, "contador": contador_sesion})
+
+
+# ───────────────────────────────────────────────
+# RECUPERACIÓN DE CONTRASEÑA
+# ───────────────────────────────────────────────
+@app.route("/recuperar_password", methods=["GET", "POST"])
+@handle_db_errors
+def recuperar_password():
+    """
+    Paso 1: Usuario ingresa su correo para solicitar recuperación
+    """
+    if request.method == "POST":
+        correo = request.form.get("correo", "").strip()
+        
+        if not correo:
+            return render_template("recuperar_password.html", error="Ingresa tu correo electrónico")
+        
+        with get_db_connection() as conn:
+            cursor = conn.cursor()
+            cursor.execute(
+                "SELECT id_usuario, usuario, nombre FROM usuarios WHERE correo = ?",
+                (correo,)
+            )
+            fila = cursor.fetchone()
+            
+            if not fila:
+                # Por seguridad, no revelar si el correo existe o no
+                return render_template(
+                    "recuperar_password.html", 
+                    mensaje="Si el correo está registrado, recibirás instrucciones para restablecer tu contraseña."
+                )
+            
+            # Generar token único
+            token = secrets.token_urlsafe(32)
+            expiry = datetime.now() + timedelta(minutes=30)
+            
+            # Guardar token en BD
+            cursor.execute(
+                "UPDATE usuarios SET reset_token = ?, reset_token_expiry = ? WHERE id_usuario = ?",
+                (token, expiry, fila[0])
+            )
+            conn.commit()
+            
+            # Aquí enviarías el email real
+            # Por ahora, mostramos el enlace en desarrollo
+            reset_url = url_for("restablecer_password", token=token, _external=True)
+            
+            
+            # ENVIAR EMAIL REAL
+            try:
+                msg = Message(
+                    'Recuperación de contraseña - Sistema EMI',
+                    sender=app.config['MAIL_USERNAME'],
+                    recipients=[correo]
+                )
+                msg.body = f'''Hola {fila[2]},
+
+Has solicitado restablecer tu contraseña. Haz clic en el siguiente enlace:
+
+{reset_url}
+
+Este enlace expirará en 30 minutos.
+
+Si no solicitaste este cambio, ignora este correo.
+'''
+                mail.send(msg)
+                logger.info(f"Email enviado a {correo} para usuario: {fila[1]}")
+                
+                return render_template(
+                    "recuperar_password.html",
+                    mensaje="Se han enviado las instrucciones a tu correo. Revisa tu bandeja de entrada."
+                )
+                
+            except Exception as e:
+                logger.error(f"Error enviando email: {e}")
+                # Si falla el email, mostrar el enlace como fallback
+                return render_template(
+                    "recuperar_password.html",
+                    mensaje="No se pudo enviar el email automático.",
+                    dev_url=reset_url  # Fallback para desarrollo
+                )
+    
+    return render_template("recuperar_password.html")
+
+
+@app.route("/restablecer_password/<token>", methods=["GET", "POST"])
+@handle_db_errors
+def restablecer_password(token):
+    """
+    Paso 2: Usuario accede al enlace y establece nueva contraseña
+    """
+    if not token:
+        return render_template("error.html", message="Token no válido"), 400
+    
+    with get_db_connection() as conn:
+        cursor = conn.cursor()
+        cursor.execute(
+            "SELECT id_usuario, usuario, reset_token_expiry FROM usuarios WHERE reset_token = ?",
+            (token,)
+        )
+        fila = cursor.fetchone()
+        
+        if not fila:
+            return render_template("error.html", message="El enlace de recuperación no es válido o ya fue utilizado."), 400
+        
+        # Verificar expiración
+        expiry = fila[2]
+        if expiry and datetime.now() > expiry:
+            return render_template("error.html", message="El enlace ha expirado. Solicita uno nuevo."), 400
+        
+        usuario_id = fila[0]
+        usuario_nombre = fila[1]
+    
+    if request.method == "POST":
+        password = request.form.get("password", "")
+        confirm_password = request.form.get("confirm_password", "")
+        
+        # Validaciones
+        if not password or not confirm_password:
+            return render_template(
+                "restablecer_password.html", 
+                token=token,
+                error="Ambos campos son obligatorios"
+            )
+        
+        if password != confirm_password:
+            return render_template(
+                "restablecer_password.html",
+                token=token, 
+                error="Las contraseñas no coinciden"
+            )
+        
+        if len(password) < 6:
+            return render_template(
+                "restablecer_password.html",
+                token=token,
+                error="La contraseña debe tener al menos 6 caracteres"
+            )
+        
+        # Actualizar contraseña
+        password_hash = bcrypt.hashpw(password.encode("utf-8"), bcrypt.gensalt()).decode("utf-8")
+        
+        with get_db_connection() as conn:
+            cursor = conn.cursor()
+            cursor.execute(
+                """UPDATE usuarios 
+                   SET password_hash = ?, 
+                       reset_token = NULL, 
+                       reset_token_expiry = NULL,
+                       session_token = NULL
+                   WHERE id_usuario = ?""",
+                (password_hash, usuario_id)
+            )
+            conn.commit()
+        
+        logger.info(f"Contraseña restablecida para usuario: {usuario_nombre}")
+        flash("Tu contraseña ha sido actualizada correctamente. Inicia sesión con tu nueva contraseña.", "success")
+        return redirect(url_for("login"))
+    
+    return render_template("restablecer_password.html", token=token)
 
 
 # ───────────────────────────────────────────────

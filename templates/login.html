@@ -233,6 +233,52 @@
         opacity: 0.9;
     }
 
+    /* ===== TOAST SESIÓN EXPIRADA (otro dispositivo) ===== */
+    .toast-expirada {
+        position: fixed;
+        top: 30px;
+        left: 50%;
+        transform: translateX(-50%) translateY(-120px);
+        background: linear-gradient(90deg, #e74c3c, #c0392b);
+        color: white;
+        padding: 20px 40px;
+        border-radius: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+        font-size: 16px;
+        font-weight: 600;
+        box-shadow: 0 10px 40px rgba(231, 76, 60, 0.5);
+        opacity: 0;
+        transition: all 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        z-index: 9999;
+        min-width: 450px;
+        justify-content: center;
+        border: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .toast-expirada.show {
+        transform: translateX(-50%) translateY(0);
+        opacity: 1;
+    }
+
+    .toast-expirada .icono {
+        font-size: 40px;
+        margin-bottom: 5px;
+    }
+
+    .toast-expirada .mensaje {
+        font-size: 18px;
+        text-align: center;
+        line-height: 1.4;
+    }
+
+    .toast-expirada .submensaje {
+        font-size: 14px;
+        opacity: 0.9;
+    }
+
     /* Animación shake para el formulario */
     @keyframes shake {
         0%, 100% { transform: translateX(0); }
@@ -295,6 +341,13 @@
     <div class="submensaje">Espera antes de intentar de nuevo</div>
 </div>
 
+<!-- Toast de sesión expirada (otro dispositivo) -->
+<div class="toast-expirada" id="toastExpirada">
+    <i class="fas fa-mobile-alt icono"></i>
+    <div class="mensaje">Tu sesión fue cerrada<br>porque iniciaste sesión en otro dispositivo</div>
+    <div class="submensaje">Por seguridad, solo puedes estar en un dispositivo a la vez</div>
+</div>
+
 <!-- Overlay de bloqueo -->
 <div class="overlay-bloqueo" id="overlayBloqueo"></div>
 
@@ -324,6 +377,11 @@
                 <button type="submit" class="btn-login" id="btnLogin">
                     <i class="fas fa-sign-in-alt"></i> INICIAR SESIÓN
                 </button>
+                <div class="text-center mt-3">
+                    <a href="{{ url_for('recuperar_password') }}" class="text-info" style="font-size: 14px;">
+                        ¿Olvidaste tu contraseña?
+                    </a>
+                </div>
             </form>
         </div>
     </div>
@@ -336,6 +394,7 @@
         const toastBloqueo = document.getElementById('toastBloqueo');
         const contadorBloqueo = document.getElementById('contadorBloqueo');
         const overlayBloqueo = document.getElementById('overlayBloqueo');
+        const toastExpirada = document.getElementById('toastExpirada');
         const loginForm = document.getElementById('loginForm');
         const btnLogin = document.getElementById('btnLogin');
         const usuarioInput = document.getElementById('usuario');
@@ -362,6 +421,12 @@
         
         if (bloqueoRestante > 0) {
             mostrarBloqueo(bloqueoRestante);
+        }
+
+        // ===== 3. TOAST DE SESIÓN EXPIRADA (otro dispositivo) =====
+        const sesionExpirada = "{{ session_expirada|default('') }}";
+        if (sesionExpirada && sesionExpirada.trim() !== '') {
+            mostrarSesionExpirada();
         }
 
         function mostrarBloqueo(segundos) {
@@ -408,6 +473,20 @@
             
             // Enfocar usuario
             usuarioInput.focus();
+        }
+
+        function mostrarSesionExpirada() {
+            toastExpirada.classList.add('show');
+            loginForm.classList.add('shake');
+            
+            setTimeout(() => {
+                loginForm.classList.remove('shake');
+            }, 500);
+
+            // Ocultar después de 6 segundos
+            setTimeout(() => {
+                toastExpirada.classList.remove('show');
+            }, 6000);
         }
     });
 </script>
